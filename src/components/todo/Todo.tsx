@@ -10,6 +10,8 @@ interface State {
   newTodo: string,
   nextId: number,
   filter: string
+  // enableEdit: boolean,
+  // valueOfInput: string
 }
 
 class TodoList extends React.Component<Props, State>{
@@ -19,18 +21,22 @@ class TodoList extends React.Component<Props, State>{
       todos: [],
       newTodo: '',
       nextId: 0,
-      filter: 'all'
+      filter: 'all',
+      // enableEdit: false,
+      // valueOfInput: ''
     };
-    this.handleToggle = this.handleToggle.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleCheckboxToggle = this.handleCheckboxToggle.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.enableEditToggle = this.enableEditToggle.bind(this);
   }
 
   onSubmit(e){
     e.preventDefault()
-    const newTodoArray = {id:this.state.nextId,text:this.state.newTodo,completed:false}
+    const newTodoArray = {id:this.state.nextId,text:this.state.newTodo,completed:false, enableEdit:false}
     this.setState(prevState =>{
       return {
         todos: this.state.todos.concat(newTodoArray),
@@ -40,7 +46,7 @@ class TodoList extends React.Component<Props, State>{
     })
   }
 
-  handleToggle(id) {
+  handleCheckboxToggle(id) {
     this.setState((prevState) => {
       const updatedTodos = prevState.todos.map(todo => {
         if (todo.id === id) {
@@ -57,7 +63,7 @@ class TodoList extends React.Component<Props, State>{
     });
   }
 
-  handleChange(e){
+  handleInputChange(e){
     this.setState({newTodo: e.target.value})
   }
 
@@ -74,28 +80,94 @@ class TodoList extends React.Component<Props, State>{
     })
   }
 
+  handleTextChange(e, id){
+    const newTodos = this.state.todos.map(item => {
+      if (item.id === id){
+        return {
+          ...item,
+          text: e.target.value
+        }
+      }
+      return item
+    })
+    this.setState({
+      todos: newTodos
+    })
+  }
+
+  enableEditToggle(id) {
+    this.setState((prevState) => {
+      const updatedTodos = prevState.todos.map(todo => {
+        if (todo.id === id) {
+            return {
+                ...todo,
+                enableEdit: !todo.enableEdit
+            }
+        }
+        return todo
+    })
+    console.log(updatedTodos)
+
+      return {
+        todos: updatedTodos,
+      };
+    });
+  }
+  
+
   render() {
     const todoItems = this.state.todos.map((item) => {
       if (this.state.filter === 'all'){
-        return <TodoItem key={item.id} id={item.id} text={item.text} completed={item.completed} handleChange={this.handleToggle} handleDelete={this.handleDelete}/>
+        return <TodoItem 
+          key={item.id} 
+          id={item.id} 
+          text={item.text} 
+          completed={item.completed} 
+          handleCheckboxToggle={this.handleCheckboxToggle} 
+          handleDelete={this.handleDelete} 
+          handleTextChange={this.handleTextChange}
+          enableEdit={item.enableEdit}
+          enableEditToggle={this.enableEditToggle}
+        />
       }
       if (this.state.filter === 'active'){
         if (item.completed === false){
-          return <TodoItem key={item.id} id={item.id} text={item.text} completed={item.completed} handleChange={this.handleToggle} handleDelete={this.handleDelete}/>
+          return <TodoItem 
+            key={item.id} 
+            id={item.id} 
+            text={item.text} 
+            completed={item.completed}
+            handleCheckboxToggle={this.handleCheckboxToggle} 
+            handleDelete={this.handleDelete} 
+            handleTextChange={this.handleTextChange}
+            enableEdit={item.enableEdit}
+            enableEditToggle={this.enableEditToggle}
+          />
         }
       }
       if (this.state.filter === 'completed'){
         if (item.completed === true){
-          return <TodoItem key={item.id} id={item.id} text={item.text} completed={item.completed} handleChange={this.handleToggle} handleDelete={this.handleDelete}/>
+          return <TodoItem 
+            key={item.id} 
+            id={item.id} 
+            text={item.text} 
+            completed={item.completed} 
+            handleCheckboxToggle={this.handleCheckboxToggle} 
+            handleDelete={this.handleDelete} 
+            handleTextChange={this.handleTextChange}
+            enableEdit={item.enableEdit}
+            enableEditToggle={this.enableEditToggle}
+          />
         }      
       }
     });
 
-
+    
     return (
       <div className="todo-list">
+        
         <form onSubmit={this.onSubmit}>
-          <input type='text' autoFocus value={this.state.newTodo} onChange={this.handleChange}/>
+          <input type='text' autoFocus value={this.state.newTodo} onChange={this.handleInputChange}/>
         </form>
         {todoItems}
         <button value='all' onClick={this.handleClick}>All</button>
