@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
 import TodoItem from "./TodoItem";
-import todosData from "./todosData";
+import todosData from './todosData'
 
 interface Props {}
 
@@ -10,8 +10,6 @@ interface State {
   newTodo: string,
   nextId: number,
   filter: string
-  // enableEdit: boolean,
-  // valueOfInput: string
 }
 
 class TodoList extends React.Component<Props, State>{
@@ -22,8 +20,6 @@ class TodoList extends React.Component<Props, State>{
       newTodo: '',
       nextId: 0,
       filter: 'all',
-      // enableEdit: false,
-      // valueOfInput: ''
     };
     this.handleCheckboxToggle = this.handleCheckboxToggle.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -106,7 +102,6 @@ class TodoList extends React.Component<Props, State>{
         }
         return todo
     })
-    console.log(updatedTodos)
 
       return {
         todos: updatedTodos,
@@ -164,15 +159,18 @@ class TodoList extends React.Component<Props, State>{
 
     
     return (
-      <div className="todo-list">
+      <div className="todo-list" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '50%', }}>
         
         <form onSubmit={this.onSubmit}>
-          <input type='text' autoFocus value={this.state.newTodo} onChange={this.handleInputChange}/>
+          <input type='text' placeholder='add new task' autoFocus value={this.state.newTodo} onChange={this.handleInputChange}/>
         </form>
         {todoItems}
-        <button value='all' onClick={this.handleClick}>All</button>
-        <button value='completed' onClick={this.handleClick}>completed</button>
-        <button value='active' onClick={this.handleClick}>active</button>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <button value='all' onClick={this.handleClick}>All</button>
+          <button value='completed' onClick={this.handleClick}>completed</button>
+          <button value='active' onClick={this.handleClick}>active</button>
+        </div>
+        <p style={{display: 'flex', justifyContent: 'center'}}>Edit task with doubleclick, press enter to confirm.</p>
       </div>
     );
   }

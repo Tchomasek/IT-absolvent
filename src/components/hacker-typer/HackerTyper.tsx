@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import "./HackerTyper.css";
 import Modal from "react-modal";
 import React from "react";
 import templateText from "./Text.jsx";
@@ -56,9 +55,14 @@ class App extends React.Component<Props, State> {
   }
   componentDidMount() {
     document.addEventListener("keydown", this.myHandler);
+    document.body.style.backgroundColor = "black"
+    document.body.style.color = '#7FFF00'
+    document.body.style.overflow = 'visible'
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", this.myHandler);
+    document.body.style.backgroundColor = 'white'
+    document.body.style.color = 'black'
   }
 
   openSettings() {
@@ -83,8 +87,10 @@ class App extends React.Component<Props, State> {
             onChange={this.handleSpeedChange}
           />
         </Modal>
-        <div id="cont"></div>
-        <button onClick={this.openSettings}>Settings</button>
+        <div style={{whiteSpace: 'pre'}} id="cont"></div>
+        <div style={{position: 'fixed', bottom: 0, width: '100%'}}>
+        <button id='settingsButton' onClick={this.openSettings}>Settings</button>
+        </div>
       </div>
     );
   }

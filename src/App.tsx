@@ -12,12 +12,9 @@ Modal.setAppElement('#root')
 export default function App() {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
+      <div style={{display:'flex',flexDirection: 'column'}}>
+        <nav >
+          <ul style={{display: 'flex', color: 'blue', backgroundColor: 'grey', listStyleType: 'none', justifyContent: 'flex-start'}}>
             <li>
               <Link to="/hacker-typer">Hacker Typer</Link>
             </li>
@@ -37,19 +34,12 @@ export default function App() {
           <Route path="/hacker-typer">
             <HackerTyper />
           </Route>
-            <Route path="/counter">
+          <Route path="/counter">
             <Counter />
-          </Route>
-          <Route path="/">
-            <Home />
           </Route>
         </Switch>
       </div>
     </Router>
   );
-}
-
-function Home() {
-  return <h1>Home</h1>;
 }
 

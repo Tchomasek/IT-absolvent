@@ -14,21 +14,25 @@ type todoProps = {
 
 
 const TodoItem = ({ id, text, completed, enableEdit, handleCheckboxToggle, handleDelete, handleTextChange, enableEditToggle }: todoProps) => {
+  const textStyle = completed ? {fontSize: '40px', textDecoration:'line-through'} : {fontSize: '40px'}
   return (
-  <div className="todo-item">
+  <div className="todo-item" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
+    
     <input
       type="checkbox"
+      style={{height: '30px', width: '30px'}}
       checked={completed}
       onChange={() => handleCheckboxToggle(id)}
     />
     {enableEdit ? (
       <input 
         type='text'
+        style={{fontSize: '40px'}}
+        autoFocus
         value={text}
         onChange={(e) => handleTextChange(e, id)}
         onKeyDown={(event) => {
               if (event.key === 'Enter' || event.key === 'Escape') {
-                console.log(id)
                 enableEditToggle(id)
                 event.preventDefault()
                 event.stopPropagation()
@@ -36,40 +40,14 @@ const TodoItem = ({ id, text, completed, enableEdit, handleCheckboxToggle, handl
             }}
       />
     ) : (
-      <p
-    onDoubleClick={() => enableEditToggle(id)}
-  >{text}</p>
+      <p 
+        style={textStyle}
+        onDoubleClick={() => enableEditToggle(id)}
+      >{text}</p>
     )}
-    <button value={id} onClick={handleDelete}>x</button>
+    <button value={id} onClick={handleDelete}>Delete</button>
   </div>
 );
 }
 
 export default TodoItem;
-
-// {this.state.enableEdit ? (
-//   <input
-//   type="text"
-//   value={this.state.valueOfInput}
-//   onChange={(event) => {
-//     this.setState({
-//       valueOfInput: event.target.value
-//     })
-//   }}
-//   onKeyDown={(event) => {
-//     if (event.key === 'Enter' || event.key === 'Escape') {
-//       this.setState({
-//         enableEdit: false
-//       })
-//       event.preventDefault()
-//       event.stopPropagation()
-//     }
-//   }}
-// />         
-// ) : (
-//   <p
-//     onDoubleClick={() => this.setState({
-//       enableEdit: true
-//     })}
-//   >{this.state.valueOfInput}x</p>
-// )}
