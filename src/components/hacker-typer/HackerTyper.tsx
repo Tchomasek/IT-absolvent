@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import "./HackerTyper.css";
+import { createGlobalStyle } from "styled-components";
 import Modal from "react-modal";
 import React from "react";
 import templateText from "./Text.jsx";
@@ -12,9 +11,13 @@ interface State {
   modalIsOpen: boolean;
   speed: number;
 }
-
-// Modal.setAppElement("");
-
+const GlobalStyle = createGlobalStyle`
+      body {
+        background-color: black;
+        color: green;
+        overflow: visible
+      }
+      `;
 class App extends React.Component<Props, State> {
   constructor(state: State) {
     super(state);
@@ -74,17 +77,35 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        <Modal isOpen={this.state.modalIsOpen}>
-          <button onClick={this.closeSettings}>x</button>
-          speed:
+        <GlobalStyle />
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          style={{
+            content: {
+              top: "35%",
+              left: "50%",
+              right: "auto",
+              bottom: "auto",
+              marginRight: "-50%",
+              width: "60%",
+              transform: "translate(-40%, -10%)",
+            },
+          }}
+        >
+          Speed:
           <input
             type="number"
             value={this.state.speed}
             onChange={this.handleSpeedChange}
           />
+          <button onClick={this.closeSettings}>x</button>
         </Modal>
-        <div id="cont"></div>
-        <button onClick={this.openSettings}>Settings</button>
+        <div style={{ whiteSpace: "pre" }} id="cont"></div>
+        <div style={{ position: "fixed", bottom: 0, width: "100%" }}>
+          <button id="settingsButton" onClick={this.openSettings}>
+            Settings
+          </button>
+        </div>
       </div>
     );
   }
