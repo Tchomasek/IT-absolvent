@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { createGlobalStyle } from 'styled-components'
 import Modal from "react-modal";
 import React from "react";
 import templateText from "./Text.jsx";
@@ -11,8 +12,6 @@ interface State {
   modalIsOpen: boolean;
   speed: number;
 }
-
-// Modal.setAppElement("");
 
 class App extends React.Component<Props, State> {
   constructor(state: State) {
@@ -55,14 +54,9 @@ class App extends React.Component<Props, State> {
   }
   componentDidMount() {
     document.addEventListener("keydown", this.myHandler);
-    document.body.style.backgroundColor = "black"
-    document.body.style.color = '#7FFF00'
-    document.body.style.overflow = 'visible'
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", this.myHandler);
-    document.body.style.backgroundColor = 'white'
-    document.body.style.color = 'black'
   }
 
   openSettings() {
@@ -74,18 +68,38 @@ class App extends React.Component<Props, State> {
     this.setState({ modalIsOpen: false });
     document.addEventListener("keydown", this.myHandler);
   }
+  
 
   render() {
+    const GlobalStyle = createGlobalStyle`
+      body {
+        background-color: black;
+        color: green;
+        overflow: visible
+      }
+      `
     return (
       <div>
-        <Modal isOpen={this.state.modalIsOpen}>
-          <button onClick={this.closeSettings}>x</button>
-          speed:
+        <GlobalStyle />
+        <Modal isOpen={this.state.modalIsOpen} 
+        style={{
+          content: {
+            top: '35%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            width: '60%',
+            transform: 'translate(-40%, -10%)',
+          },
+        }}>
+          Speed:
           <input
             type="number"
             value={this.state.speed}
             onChange={this.handleSpeedChange}
           />
+          <button onClick={this.closeSettings}>x</button>
         </Modal>
         <div style={{whiteSpace: 'pre'}} id="cont"></div>
         <div style={{position: 'fixed', bottom: 0, width: '100%'}}>
