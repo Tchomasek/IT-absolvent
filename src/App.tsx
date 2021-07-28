@@ -14,7 +14,7 @@ export default function App() {
     <Router>
       <div style={{display:'flex',flexDirection: 'column'}}>
         <nav >
-          <ul style={{display: 'flex', color: 'blue', backgroundColor: 'grey', listStyleType: 'none', justifyContent: 'flex-start'}}>
+          <ul style={{display: 'flex', color: 'blue', backgroundColor: 'grey', listStyleType: 'none', justifyContent: ' '}}>
             <li>
               <Link to="/hacker-typer">Hacker Typer</Link>
             </li>

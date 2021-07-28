@@ -12,7 +12,13 @@ interface State {
   modalIsOpen: boolean;
   speed: number;
 }
-
+const GlobalStyle = createGlobalStyle`
+      body {
+        background-color: black;
+        color: green;
+        overflow: visible
+      }
+      `
 class App extends React.Component<Props, State> {
   constructor(state: State) {
     super(state);
@@ -71,13 +77,7 @@ class App extends React.Component<Props, State> {
   
 
   render() {
-    const GlobalStyle = createGlobalStyle`
-      body {
-        background-color: black;
-        color: green;
-        overflow: visible
-      }
-      `
+    
     return (
       <div>
         <GlobalStyle />
