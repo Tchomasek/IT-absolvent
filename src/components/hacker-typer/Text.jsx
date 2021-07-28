@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 const templateText = `struct group_info init_groups = { .usage = ATOMIC_INIT(2) };
 
 struct group_info *groups_alloc(int gidsetsize){
