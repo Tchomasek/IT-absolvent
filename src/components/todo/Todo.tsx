@@ -116,53 +116,30 @@ class TodoList extends React.Component<Props, State> {
 
   render() {
     const todoItems = this.state.todos.map((item) => {
+      const todoItem = (
+        <TodoItem
+          key={item.id}
+          id={item.id}
+          text={item.text}
+          completed={item.completed}
+          handleCheckboxToggle={this.handleCheckboxToggle}
+          handleDelete={this.handleDelete}
+          handleTextChange={this.handleTextChange}
+          enableEdit={item.enableEdit}
+          enableEditToggle={this.enableEditToggle}
+        />
+      );
       if (this.state.filter === "all") {
-        return (
-          <TodoItem
-            key={item.id}
-            id={item.id}
-            text={item.text}
-            completed={item.completed}
-            handleCheckboxToggle={this.handleCheckboxToggle}
-            handleDelete={this.handleDelete}
-            handleTextChange={this.handleTextChange}
-            enableEdit={item.enableEdit}
-            enableEditToggle={this.enableEditToggle}
-          />
-        );
+        return todoItem;
       }
       if (this.state.filter === "active") {
         if (item.completed === false) {
-          return (
-            <TodoItem
-              key={item.id}
-              id={item.id}
-              text={item.text}
-              completed={item.completed}
-              handleCheckboxToggle={this.handleCheckboxToggle}
-              handleDelete={this.handleDelete}
-              handleTextChange={this.handleTextChange}
-              enableEdit={item.enableEdit}
-              enableEditToggle={this.enableEditToggle}
-            />
-          );
+          return todoItem;
         }
       }
       if (this.state.filter === "completed") {
         if (item.completed === true) {
-          return (
-            <TodoItem
-              key={item.id}
-              id={item.id}
-              text={item.text}
-              completed={item.completed}
-              handleCheckboxToggle={this.handleCheckboxToggle}
-              handleDelete={this.handleDelete}
-              handleTextChange={this.handleTextChange}
-              enableEdit={item.enableEdit}
-              enableEditToggle={this.enableEditToggle}
-            />
-          );
+          return todoItem;
         }
       }
     });
