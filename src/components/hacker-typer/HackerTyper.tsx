@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 import Modal from "react-modal";
 import React from "react";
 import templateText from "./Text.jsx";
@@ -18,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
         color: green;
         overflow: visible
       }
-      `
+      `;
 class App extends React.Component<Props, State> {
   constructor(state: State) {
     super(state);
@@ -74,25 +73,25 @@ class App extends React.Component<Props, State> {
     this.setState({ modalIsOpen: false });
     document.addEventListener("keydown", this.myHandler);
   }
-  
 
   render() {
-    
     return (
       <div>
         <GlobalStyle />
-        <Modal isOpen={this.state.modalIsOpen} 
-        style={{
-          content: {
-            top: '35%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            width: '60%',
-            transform: 'translate(-40%, -10%)',
-          },
-        }}>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          style={{
+            content: {
+              top: "35%",
+              left: "50%",
+              right: "auto",
+              bottom: "auto",
+              marginRight: "-50%",
+              width: "60%",
+              transform: "translate(-40%, -10%)",
+            },
+          }}
+        >
           Speed:
           <input
             type="number"
@@ -101,9 +100,11 @@ class App extends React.Component<Props, State> {
           />
           <button onClick={this.closeSettings}>x</button>
         </Modal>
-        <div style={{whiteSpace: 'pre'}} id="cont"></div>
-        <div style={{position: 'fixed', bottom: 0, width: '100%'}}>
-        <button id='settingsButton' onClick={this.openSettings}>Settings</button>
+        <div style={{ whiteSpace: "pre" }} id="cont"></div>
+        <div style={{ position: "fixed", bottom: 0, width: "100%" }}>
+          <button id="settingsButton" onClick={this.openSettings}>
+            Settings
+          </button>
         </div>
       </div>
     );
