@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { memo } from "react";
 import styled from "styled-components";
 
 type squareProps = {
@@ -15,7 +15,7 @@ const MyTd = styled.td`
   }
 `;
 
-const Square = React.memo((props: squareProps) => {
+const Square = memo((props: squareProps) => {
   return <MyTd onClick={props.handleClick}>{props.value}</MyTd>;
 });
 
