@@ -1,5 +1,6 @@
 import { memo } from "react";
 import styled from "styled-components";
+import theme from "./theme";
 
 type squareProps = {
   handleClick: () => void;
@@ -7,11 +8,11 @@ type squareProps = {
 };
 
 const MyTd = styled.td`
-  width: 50px;
-  height: 50px;
+  width: ${theme.widthOfCell};
+  height: ${theme.heightOfCell};
   border: 1px solid black;
   &:hover {
-    background-color: #d4c7c7;
+    background-color: ${theme.hoverColor};
   }
 `;
 
