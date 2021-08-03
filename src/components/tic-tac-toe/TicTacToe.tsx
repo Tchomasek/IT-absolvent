@@ -3,9 +3,12 @@ import Square from "./Square";
 import styled from "styled-components";
 import winLogic from "./winLogic";
 
+const GRID_SIZE = 10;
+
 type State = {
   grid: string[][];
   nextTurn: "O" | "X";
+  cellsToWin: number;
 };
 
 const DivWrapper = styled.div`
@@ -13,30 +16,49 @@ const DivWrapper = styled.div`
   margin: auto;
   text-align: center;
   flex-flow: column;
+  justify-content: center;
+`;
+
+const InputCellsToWin = styled.input`
+  width: 30px;
+  text-align: center;
+`;
+
+const CellsToWinWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 10px;
 `;
 
 export default class TicTacToe extends Component<{}, State> {
   constructor(props) {
     super(props);
     this.state = {
-      grid: Array.from({ length: 10 }).map(() =>
-        Array.from({ length: 10 }, () => "")
+      grid: Array.from({ length: GRID_SIZE }).map(() =>
+        Array.from({ length: GRID_SIZE }, () => "")
       ),
       nextTurn: "O",
+      cellsToWin: 5,
     };
     this.handleClick = this.handleClick.bind(this);
     this.reset = this.reset.bind(this);
+    this.changeCellsToWin = this.changeCellsToWin.bind(this);
+  }
+  changeCellsToWin(e) {
+    this.setState({ cellsToWin: e.target.value });
   }
 
   reset() {
     this.setState({
-      grid: Array.from({ length: 10 }).map(() =>
+      grid: Array.from({ length: 10 }, () =>
         Array.from({ length: 10 }, () => "")
       ),
       nextTurn: "O",
     });
   }
+
   handleClick(i: number, j: number) {
+    // check if the clicked cell is empty
     if (
       this.state.nextTurn === this.state.grid[i][j] ||
       this.state.grid[i][j] !== ""
@@ -59,8 +81,25 @@ export default class TicTacToe extends Component<{}, State> {
           grid: newGrid,
         };
       });
+      // winLogic returns false and empty string if nobody won in this turn, or true and color of the player that won
+      const { win, player } = winLogic(
+        this.state.grid,
+        i,
+        j,
+        this.state.nextTurn,
+        this.reset,
+        this.state.cellsToWin
+      );
+      // if a player won, alert window will pop-up and player gets to choose if he wants to reset the board by clicking Ok
+      if (win) {
+        setTimeout(() => {
+          const x = confirm(player + " wins");
+          if (x === true) {
+            this.reset();
+          }
+        }, 1);
+      }
     }
-    winLogic(this.state.grid, i, j, this.state.nextTurn, this.reset);
   }
 
   render() {
@@ -68,7 +107,6 @@ export default class TicTacToe extends Component<{}, State> {
       return (
         <tr key={"row_" + i}>
           {row.map((col, j) => {
-            // console.time();
             return (
               <Square
                 handleClick={() => this.handleClick(i, j)}
@@ -76,13 +114,20 @@ export default class TicTacToe extends Component<{}, State> {
                 value={this.state.grid[i][j]}
               />
             );
-            // console.timeEnd();
           })}
         </tr>
       );
     });
     return (
       <DivWrapper>
+        <CellsToWinWrapper>
+          Cells to win:
+          <InputCellsToWin
+            type="number"
+            value={this.state.cellsToWin}
+            onChange={this.changeCellsToWin}
+          />
+        </CellsToWinWrapper>
         <table cellSpacing="0">
           <tbody>{board}</tbody>
         </table>

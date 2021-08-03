@@ -10,9 +10,9 @@ type squareProps = {
 const MyTd = styled.td`
   width: ${theme.widthOfCell};
   height: ${theme.heightOfCell};
-  border: 1px solid black;
+  border: 1px solid ${theme.cellBorderColor};
   &:hover {
-    background-color: ${theme.hoverColor};
+    background-color: ${theme.cellHoverColor};
   }
 `;
 

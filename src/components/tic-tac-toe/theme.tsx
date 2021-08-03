@@ -4,7 +4,8 @@ const sizeOfCell = "50";
 const myTheme = {
   widthOfCell: sizeOfCell + "px",
   heightOfCell: sizeOfCell + "px",
-  hoverColor: "#d4c7c7",
+  cellHoverColor: "#d4c7c7",
+  cellBorderColor: "black",
 };
 
 export default myTheme;
