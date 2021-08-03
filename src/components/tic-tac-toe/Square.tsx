@@ -4,7 +4,7 @@ import theme from "./theme";
 
 type squareProps = {
   handleClick: () => void;
-  value: string;
+  value: "O" | "X" | null;
 };
 
 const MyTd = styled.td`

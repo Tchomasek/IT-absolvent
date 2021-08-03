@@ -1,13 +1,14 @@
+// winLogic was heavily inspired by code from this web page: https://briancaffey.github.io/2017/10/03/simple-games-in-react.html/
+
 function winLogic(
-  grid: string[][],
+  grid: ("O" | "X" | null)[][],
   x: number,
   y: number,
   nextTurn: "O" | "X",
-  reset: () => void,
   cellsToWin: number
 ) {
   // flip clicked square manualy, because this.state.grid returned old, not updated grid
-  const currentGrid = grid;
+  const currentGrid = [...grid];
   currentGrid[x][y] = nextTurn;
 
   // run checkWin function
@@ -15,7 +16,7 @@ function winLogic(
 }
 
 function checkDirection(
-  grid: string[][],
+  grid: ("O" | "X" | null)[][],
   x_: -1 | 0 | 1,
   y_: -1 | 0 | 1,
   color: "X" | "O",
@@ -39,7 +40,12 @@ function checkDirection(
 }
 
 //sum the directions (left+right, up+down, 2 diagonals)
-function checkWin(grid: string[][], x: number, y: number, cellsToWin: number) {
+function checkWin(
+  grid: ("O" | "X" | null)[][],
+  x: number,
+  y: number,
+  cellsToWin: number
+) {
   let conditions = { win: false, player: "" };
   const x_horizontal =
     checkDirection(grid, 0, 1, "X", x, y) +

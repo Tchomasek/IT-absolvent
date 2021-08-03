@@ -6,7 +6,7 @@ import winLogic from "./winLogic";
 const GRID_SIZE = 10;
 
 type State = {
-  grid: string[][];
+  grid: ("O" | "X" | null)[][];
   nextTurn: "O" | "X";
   cellsToWin: number;
 };
@@ -30,13 +30,17 @@ const CellsToWinWrapper = styled.div`
   margin: 10px;
 `;
 
+function createGrid() {
+  return Array.from({ length: GRID_SIZE }).map(() =>
+    Array.from({ length: GRID_SIZE }, () => null)
+  );
+}
+
 export default class TicTacToe extends Component<{}, State> {
   constructor(props) {
     super(props);
     this.state = {
-      grid: Array.from({ length: GRID_SIZE }).map(() =>
-        Array.from({ length: GRID_SIZE }, () => "")
-      ),
+      grid: createGrid(),
       nextTurn: "O",
       cellsToWin: 5,
     };
@@ -50,9 +54,7 @@ export default class TicTacToe extends Component<{}, State> {
 
   reset() {
     this.setState({
-      grid: Array.from({ length: 10 }, () =>
-        Array.from({ length: 10 }, () => "")
-      ),
+      grid: createGrid(),
       nextTurn: "O",
     });
   }
@@ -61,14 +63,14 @@ export default class TicTacToe extends Component<{}, State> {
     // check if the clicked cell is empty
     if (
       this.state.nextTurn === this.state.grid[i][j] ||
-      this.state.grid[i][j] !== ""
+      this.state.grid[i][j] !== null
     ) {
       return;
     } else {
       this.setState((prevState) => {
         const newGrid = prevState.grid.map((row, i_index) => {
           const newRow = row.map((square, j_index) => {
-            if (i === i_index && j === j_index && square === "") {
+            if (i === i_index && j === j_index && square === null) {
               return this.state.nextTurn;
             } else {
               return square;
@@ -87,11 +89,11 @@ export default class TicTacToe extends Component<{}, State> {
         i,
         j,
         this.state.nextTurn,
-        this.reset,
         this.state.cellsToWin
       );
       // if a player won, alert window will pop-up and player gets to choose if he wants to reset the board by clicking Ok
       if (win) {
+        // without 1ms timeout, the confirm window would be displayed immediately and the last symbol would not get rendered
         setTimeout(() => {
           const x = confirm(player + " wins");
           if (x === true) {
