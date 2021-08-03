@@ -3,6 +3,7 @@ import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Counter from "./components/counter/Counter";
 import HackerTyper from "./components/hacker-typer/HackerTyper";
 import Modal from "react-modal";
+import TicTacToe from "./components/tic-tac-toe/TicTacToe";
 import ToDo from "./components/todo/Todo";
 
 Modal.setAppElement("#root");
@@ -30,6 +31,9 @@ export default function App() {
             <li>
               <Link to="/todo">ToDo</Link>
             </li>
+            <li>
+              <Link to="/tic-tac-toe">Tic Tac Toe</Link>
+            </li>
           </ul>
         </nav>
 
@@ -42,6 +46,9 @@ export default function App() {
           </Route>
           <Route path="/counter">
             <Counter />
+          </Route>
+          <Route path="/tic-tac-toe">
+            <TicTacToe />
           </Route>
         </Switch>
       </div>
