@@ -75,11 +75,11 @@ function checkWin(
     1;
 
   const x_diag2 =
-    checkDirection(grid, 1, 1, "X", x, y) +
-    checkDirection(grid, -1, -1, "X", x, y) -
+    checkDirection(grid, -1, 1, "X", x, y) +
+    checkDirection(grid, 1, -1, "X", x, y) -
     1;
   const o_diag2 =
-    checkDirection(grid, 1, 1, "O", x, y) +
+    checkDirection(grid, -1, 1, "O", x, y) +
     checkDirection(grid, 1, -1, "O", x, y) -
     1;
 
