@@ -36,7 +36,7 @@ export default function App() {
               <Link to="/tic-tac-toe">Tic Tac Toe</Link>
             </li>
             <li>
-              <Link to="/pexeso">Pexeso</Link>
+              <Link to="/pexeso">Catxeso</Link>
             </li>
           </ul>
         </nav>

@@ -5,6 +5,7 @@ import shuffle from "./shuffle";
 import styled from "styled-components";
 
 const GRID_SIZE = 4;
+document.title = "Catxeso";
 
 const DivWrapper = styled.div`
   display: flex;
