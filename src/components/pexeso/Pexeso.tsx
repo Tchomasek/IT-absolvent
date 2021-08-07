@@ -1,6 +1,6 @@
+import { useState } from "react";
 import Card from "./Card";
 import MyArray from "./cardsArray";
-import React, { useState } from "react";
 import shuffle from "./shuffle";
 import styled from "styled-components";
 
@@ -23,15 +23,17 @@ function createGrid() {
 const startGrid = createGrid();
 
 function clickHandler(
-  grid: [{ value: number; turned: boolean; cat: string }],
+  grid, // : [{ value: number; turned: boolean; cat: string }]  ???
   i: number,
   j: number,
-  setFirstTurned,
-  firstTurned,
-  setGrid
+  setFirstTurned: (grid) => void,
+  firstTurned: null | number[],
+  setGrid, // (i, j) => [{ value: number; turned: boolean; cat: string }] ???
+  turnDisabled: boolean,
+  setTurnDisabled: (arg0: boolean) => void
 ) {
-  // clicking on empty spot does nothing
-  if (grid[i][j].value === "") {
+  if (turnDisabled) {
+    // is two not matching cards are turned, for 1500ms no other card can be turned
     return;
   }
   // clicking on the same spot twice does nothing
@@ -48,6 +50,7 @@ function clickHandler(
   } else {
     // if this is the second card, do the bussiness
     setGrid([...grid], (grid[i][j].turned = true));
+    // if two matching cards are turned, remove them
     if (firstTurned[0] === grid[i][j].value) {
       setTimeout(() => {
         setFirstTurned(null);
@@ -59,13 +62,16 @@ function clickHandler(
         );
       }, 500);
     } else {
+      setTurnDisabled(true);
       setFirstTurned(null);
+      // if two cards dont match, they stay revealed a bit longer
       setTimeout(() => {
         setGrid(
           [...grid],
           (grid[firstTurned[1]][firstTurned[2]].turned = false)
         );
         setGrid([...grid], (grid[i][j].turned = false));
+        setTurnDisabled(false);
       }, 1500);
     }
   }
@@ -74,6 +80,8 @@ function clickHandler(
 export default function Pexeso() {
   const [grid, setGrid] = useState(startGrid);
   const [firstTurned, setFirstTurned] = useState(null);
+  // this value will be false during those 1500 ms when two not-matching cards are turned, so the player cant turn another cards
+  const [turnDisabled, setTurnDisabled] = useState(false);
   const board = grid.map((row, i) => {
     return (
       <tr key={"row_" + i}>
@@ -82,8 +90,16 @@ export default function Pexeso() {
             <Card
               key={i + "_" + j}
               handleClick={() =>
-                //@ts-ignore
-                clickHandler(grid, i, j, setFirstTurned, firstTurned, setGrid)
+                clickHandler(
+                  grid,
+                  i,
+                  j,
+                  setFirstTurned,
+                  firstTurned,
+                  setGrid,
+                  turnDisabled,
+                  setTurnDisabled
+                )
               }
               value={grid[i][j].value}
               turned={grid[i][j].turned}

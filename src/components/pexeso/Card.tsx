@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import black from "./cats/black.jpg";
+import backside from "./cats/backside.jpg";
 import styled from "styled-components";
 import theme from "./theme";
 
@@ -17,8 +16,9 @@ const MyTd = styled.td`
 `;
 
 function Card(props: Props) {
-  const picture = props.turned ? props.cat : black;
-  //@ts-expect-error
+  const picture = props.turned ? props.cat : backside;
+  // i wasnt able fo figure out how to solve this ts error
+  //@ts-ignore
   return <MyTd cat={picture} onClick={props.handleClick}></MyTd>;
 }
 

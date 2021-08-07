@@ -17,7 +17,7 @@ const MyArray = [
   { value: 6, turned: false, cat: cat6 },
   { value: 7, turned: false, cat: cat7 },
   { value: 8, turned: false, cat: cat8 },
-  // then repeat
+  // so i chose this not-so-elegant way of solving this
   { value: 1, turned: false, cat: cat1 },
   { value: 2, turned: false, cat: cat2 },
   { value: 3, turned: false, cat: cat3 },
