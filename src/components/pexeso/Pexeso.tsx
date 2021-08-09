@@ -55,6 +55,7 @@ const clickHandler = (args: ClickHandlerArg) => {
   ) {
     return;
   }
+
   // if this is the first card, just remember it
   if (args.firstTurned === null) {
     //first value of firstTurned represents its value, second and third represents its coordinations
