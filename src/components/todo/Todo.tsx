@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import React from "react";
 import TodoItem from "./TodoItem";
 
@@ -145,40 +146,45 @@ class TodoList extends React.Component<Props, State> {
     });
 
     return (
-      <div
-        className="todo-list"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          width: "50%",
-        }}
-      >
-        <form onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            placeholder="add new task"
-            autoFocus
-            value={this.state.newTodo}
-            onChange={this.handleInputChange}
-          />
-        </form>
-        {todoItems}
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <button value="all" onClick={this.handleClick}>
-            All
-          </button>
-          <button value="completed" onClick={this.handleClick}>
-            completed
-          </button>
-          <button value="active" onClick={this.handleClick}>
-            active
-          </button>
+      <>
+        <Helmet>
+          <title>ToDo</title>
+        </Helmet>
+        <div
+          className="todo-list"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            width: "50%",
+          }}
+        >
+          <form onSubmit={this.onSubmit}>
+            <input
+              type="text"
+              placeholder="add new task"
+              autoFocus
+              value={this.state.newTodo}
+              onChange={this.handleInputChange}
+            />
+          </form>
+          {todoItems}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <button value="all" onClick={this.handleClick}>
+              All
+            </button>
+            <button value="completed" onClick={this.handleClick}>
+              completed
+            </button>
+            <button value="active" onClick={this.handleClick}>
+              active
+            </button>
+          </div>
+          <p style={{ display: "flex", justifyContent: "center" }}>
+            Edit task with doubleclick, press enter to confirm.
+          </p>
         </div>
-        <p style={{ display: "flex", justifyContent: "center" }}>
-          Edit task with doubleclick, press enter to confirm.
-        </p>
-      </div>
+      </>
     );
   }
 }

@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import { createGlobalStyle } from "styled-components";
 import Modal from "react-modal";
 import React from "react";
@@ -77,6 +78,9 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>HacterTyper</title>
+        </Helmet>
         <GlobalStyle />
         <Modal
           isOpen={this.state.modalIsOpen}

@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Helmet } from "react-helmet";
 import Square from "./Square";
 import styled from "styled-components";
 import winLogic from "./winLogic";
@@ -121,21 +122,26 @@ export default class TicTacToe extends Component<{}, State> {
       );
     });
     return (
-      <DivWrapper>
-        <CellsToWinWrapper>
-          Cells to win:
-          <InputCellsToWin
-            type="number"
-            value={this.state.cellsToWin}
-            onChange={this.changeCellsToWin}
-          />
-        </CellsToWinWrapper>
-        <table cellSpacing="0">
-          <tbody>{board}</tbody>
-        </table>
-        <button onClick={this.reset}>Reset</button>
-        <br />
-      </DivWrapper>
+      <>
+        <Helmet>
+          <title>TicTacToe</title>
+        </Helmet>
+        <DivWrapper>
+          <CellsToWinWrapper>
+            Cells to win:
+            <InputCellsToWin
+              type="number"
+              value={this.state.cellsToWin}
+              onChange={this.changeCellsToWin}
+            />
+          </CellsToWinWrapper>
+          <table cellSpacing="0">
+            <tbody>{board}</tbody>
+          </table>
+          <button onClick={this.reset}>Reset</button>
+          <br />
+        </DivWrapper>
+      </>
     );
   }
 }
