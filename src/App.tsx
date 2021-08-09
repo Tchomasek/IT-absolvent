@@ -1,8 +1,8 @@
 import "./App.css";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Pexeso } from "./components/pexeso/Pexeso";
 import Counter from "./components/counter/Counter";
 import HackerTyper from "./components/hacker-typer/HackerTyper";
-import Pexeso from "./components/pexeso/Pexeso";
 import TicTacToe from "./components/tic-tac-toe/TicTacToe";
 import ToDo from "./components/todo/Todo";
 

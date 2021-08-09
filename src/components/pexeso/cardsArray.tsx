@@ -7,7 +7,7 @@ import cat6 from "./cats/cat6.jpg";
 import cat7 from "./cats/cat7.jpg";
 import cat8 from "./cats/cat8.jpg";
 
-function getCardsArray() {
+const getCardsArray = () => {
   return [
     { value: 1, turned: false, cat: cat1 },
     { value: 2, turned: false, cat: cat2 },
@@ -18,5 +18,5 @@ function getCardsArray() {
     { value: 7, turned: false, cat: cat7 },
     { value: 8, turned: false, cat: cat8 },
   ];
-}
+};
 export const doubledArray = [...getCardsArray(), ...getCardsArray()];

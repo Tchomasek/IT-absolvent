@@ -27,10 +27,16 @@ type Grid = { value: number; turned: boolean; cat: string }[][];
 
 type ClickHandlerArg = {
   grid: Grid;
-  i: number;
-  j: number;
-  setFirstTurned: (array: number[] | null) => void;
-  firstTurned: number[] | null;
+  x: number;
+  y: number;
+  setFirstTurned: React.Dispatch<
+    React.SetStateAction<{
+      value: number;
+      coordX: number;
+      coordY: number;
+    } | null>
+  >;
+  firstTurned: { value: number; coordX: number; coordY: number } | null;
   setGrid: React.Dispatch<React.SetStateAction<Grid>>;
   turnDisabled: boolean;
   setTurnDisabled: (turnDisabled: boolean) => void;
@@ -42,31 +48,32 @@ const clickHandler = (args: ClickHandlerArg) => {
     return;
   }
   // clicking on the same spot twice does nothing
-  if (args.firstTurned) {
-    if (args.i === args.firstTurned[1] && args.j === args.firstTurned[2]) {
-      return;
-    }
+  if (
+    args.firstTurned &&
+    args.x === args.firstTurned.coordX &&
+    args.y === args.firstTurned.coordY
+  ) {
+    return;
   }
   // if this is the first card, just remember it
   if (args.firstTurned === null) {
     //first value of firstTurned represents its value, second and third represents its coordinations
-    args.setFirstTurned([args.grid[args.i][args.j].value, args.i, args.j]);
+    args.setFirstTurned({
+      value: args.grid[args.x][args.y].value,
+      coordX: args.x,
+      coordY: args.y,
+    });
     args.setGrid((prevGrid) => {
-      const newGrid = prevGrid.map(
-        (
-          row: { value: number; turned: boolean; cat: string }[],
-          i_index: number
-        ) => {
-          const newRow = row.map((card, j_index) => {
-            if (args.i === i_index && args.j === j_index) {
-              return { value: card.value, turned: true, cat: card.cat };
-            } else {
-              return card;
-            }
-          });
-          return newRow;
-        }
-      );
+      const newGrid = prevGrid.map((row, xIndex: number) => {
+        const newRow = row.map((card, yIndex) => {
+          if (args.x === xIndex && args.y === yIndex) {
+            return { value: card.value, turned: true, cat: card.cat };
+          } else {
+            return card;
+          }
+        });
+        return newRow;
+      });
       return newGrid;
     });
   } else {
@@ -75,10 +82,10 @@ const clickHandler = (args: ClickHandlerArg) => {
       const newGrid = prevGrid.map(
         (
           row: { value: number; turned: boolean; cat: string }[],
-          i_index: number
+          xIndex: number
         ) => {
-          const newRow = row.map((card, j_index) => {
-            if (args.i === i_index && args.j === j_index) {
+          const newRow = row.map((card, yIndex) => {
+            if (args.x === xIndex && args.y === yIndex) {
               return { value: card.value, turned: true, cat: card.cat };
             } else {
               return card;
@@ -90,29 +97,24 @@ const clickHandler = (args: ClickHandlerArg) => {
       return newGrid;
     });
     // if two matching cards are turned, remove them
-    if (args.firstTurned[0] === args.grid[args.i][args.j].value) {
+    if (args.firstTurned.value === args.grid[args.x][args.y].value) {
       setTimeout(() => {
         args.setFirstTurned(null);
         args.setGrid((prevGrid) => {
-          const newGrid = prevGrid.map(
-            (
-              row: { value: number; turned: boolean; cat: string }[],
-              i_index: number
-            ) => {
-              const newRow = row.map((card, j_index) => {
-                if (
-                  (args.i === i_index && args.j === j_index) ||
-                  (args.firstTurned?.[1] === i_index &&
-                    args.firstTurned[2] === j_index)
-                ) {
-                  return { value: 0, turned: true, cat: "" };
-                } else {
-                  return card;
-                }
-              });
-              return newRow;
-            }
-          );
+          const newGrid = prevGrid.map((row, xIndex: number) => {
+            const newRow = row.map((card, yIndex) => {
+              if (
+                (args.x === xIndex && args.y === yIndex) ||
+                (args.firstTurned?.coordX === xIndex &&
+                  args.firstTurned.coordY === yIndex)
+              ) {
+                return { value: 0, turned: true, cat: "" };
+              } else {
+                return card;
+              }
+            });
+            return newRow;
+          });
           return newGrid;
         });
       }, 500);
@@ -122,25 +124,20 @@ const clickHandler = (args: ClickHandlerArg) => {
       // if two cards dont match, they stay revealed a bit longer
       setTimeout(() => {
         args.setGrid((prevGrid) => {
-          const newGrid = prevGrid.map(
-            (
-              row: { value: number; turned: boolean; cat: string }[],
-              i_index: number
-            ) => {
-              const newRow = row.map((card, j_index) => {
-                if (
-                  (args.i === i_index && args.j === j_index) ||
-                  (args.firstTurned?.[1] === i_index &&
-                    args.firstTurned[2] === j_index)
-                ) {
-                  return { value: card.value, turned: false, cat: card.cat };
-                } else {
-                  return card;
-                }
-              });
-              return newRow;
-            }
-          );
+          const newGrid = prevGrid.map((row, xIndex: number) => {
+            const newRow = row.map((card, yIndex) => {
+              if (
+                (args.x === xIndex && args.y === yIndex) ||
+                (args.firstTurned?.coordX === xIndex &&
+                  args.firstTurned.coordY === yIndex)
+              ) {
+                return { value: card.value, turned: false, cat: card.cat };
+              } else {
+                return card;
+              }
+            });
+            return newRow;
+          });
           return newGrid;
         });
         args.setTurnDisabled(false);
@@ -149,50 +146,49 @@ const clickHandler = (args: ClickHandlerArg) => {
   }
 };
 
-export default function Pexeso() {
+export const Pexeso = () => {
   const [grid, setGrid] = useState(startGrid);
-  const [firstTurned, setFirstTurned] = useState(null as null | number[]);
+  const [firstTurned, setFirstTurned] = useState(
+    null as null | { value: number; coordX: number; coordY: number }
+  );
   // this value will be false during those 1500 ms when two not-matching cards are turned, so the player cant turn another cards
   const [turnDisabled, setTurnDisabled] = useState(false);
-  const board = grid.map((row, i) => {
-    return (
-      <>
-        <Helmet>
-          <title>Catxeso</title>
-        </Helmet>
-        <tr key={"row_" + i}>
-          {row.map((col, j) => {
-            return (
-              <Card
-                key={i + "_" + j}
-                handleClick={() =>
-                  clickHandler({
-                    grid,
-                    i,
-                    j,
-                    setFirstTurned,
-                    firstTurned,
-                    setGrid,
-                    turnDisabled,
-                    setTurnDisabled,
-                  })
-                }
-                value={grid[i][j].value}
-                turned={grid[i][j].turned}
-                cat={grid[i][j].cat}
-              />
-            );
-          })}
-        </tr>
-      </>
-    );
-  });
-
+  const board = grid.map((row, x) => (
+    <tr key={"row_" + x}>
+      {row.map((col, y) => {
+        return (
+          <Card
+            key={x + "_" + y}
+            handleClick={() =>
+              clickHandler({
+                grid,
+                x,
+                y,
+                setFirstTurned,
+                firstTurned,
+                setGrid,
+                turnDisabled,
+                setTurnDisabled,
+              })
+            }
+            value={grid[x][y].value}
+            turned={grid[x][y].turned}
+            cat={grid[x][y].cat}
+          />
+        );
+      })}
+    </tr>
+  ));
   return (
-    <DivWrapper>
-      <table>
-        <tbody>{board}</tbody>
-      </table>
-    </DivWrapper>
+    <>
+      <Helmet>
+        <title>Catxeso</title>
+      </Helmet>
+      <DivWrapper>
+        <table>
+          <tbody>{board}</tbody>
+        </table>
+      </DivWrapper>
+    </>
   );
-}
+};
