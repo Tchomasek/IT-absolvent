@@ -1,10 +1,9 @@
-// got from stack overflow
-// dont trust this code
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 
-export default function shuffle(array) {
-  var currentIndex = array.length,
-    randomIndex;
+//: { value: number; turned: boolean; cat: string }[][]
+const shuffle = (array) => {
+  let currentIndex = array.length,
+    randomIndex: number;
 
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
@@ -19,4 +18,6 @@ export default function shuffle(array) {
     ];
   }
   return array;
-}
+};
+
+export { shuffle };

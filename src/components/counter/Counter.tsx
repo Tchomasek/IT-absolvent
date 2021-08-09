@@ -1,4 +1,5 @@
 import "./App.css";
+import { Helmet } from "react-helmet";
 import React from "react";
 import randomColor from "randomcolor";
 
@@ -42,11 +43,16 @@ class App extends React.Component<Props, State> {
   }
   render() {
     return (
-      <div className="cont" style={{ color: this.state.color }}>
-        <button onClick={this.decrement}>-1</button>
-        <a>{this.state.counter}</a>
-        <button onClick={this.increment}>+1</button>
-      </div>
+      <>
+        <Helmet>
+          <title>Counter</title>
+        </Helmet>
+        <div className="cont" style={{ color: this.state.color }}>
+          <button onClick={this.decrement}>-1</button>
+          <a>{this.state.counter}</a>
+          <button onClick={this.increment}>+1</button>
+        </div>
+      </>
     );
   }
 }

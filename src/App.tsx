@@ -2,12 +2,9 @@ import "./App.css";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Counter from "./components/counter/Counter";
 import HackerTyper from "./components/hacker-typer/HackerTyper";
-import Modal from "react-modal";
 import Pexeso from "./components/pexeso/Pexeso";
 import TicTacToe from "./components/tic-tac-toe/TicTacToe";
 import ToDo from "./components/todo/Todo";
-
-Modal.setAppElement("#root");
 
 export default function App() {
   return (
