@@ -1,7 +1,7 @@
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 
-//export const shuffle = <T,>(array: T[]): T[] => {
-export const shuffle = (array) => {
+export const shuffle = <T,>(array: T[]): T[] => {
+  //export const shuffle = (array) => {
   let currentIndex = array.length;
   let randomIndex: number;
 

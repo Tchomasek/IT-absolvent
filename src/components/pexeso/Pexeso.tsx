@@ -19,7 +19,7 @@ const createGrid = () => {
   const shuffledArray = shuffle(doubledArray);
   return Array.from({ length: GRID_SIZE }).map(() =>
     Array.from({ length: GRID_SIZE }, () => shuffledArray.pop())
-  );
+  ) as Grid;
 };
 const startGrid = createGrid();
 
