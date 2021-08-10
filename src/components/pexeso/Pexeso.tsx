@@ -65,7 +65,7 @@ const clickHandler = (args: ClickHandlerArg) => {
       coordY: args.y,
     });
     args.setGrid((prevGrid) => {
-      const newGrid = prevGrid.map((row, xIndex: number) => {
+      const newGrid = prevGrid.map((row, xIndex) => {
         const newRow = row.map((card, yIndex) => {
           if (args.x === xIndex && args.y === yIndex) {
             return { value: card.value, turned: true, cat: card.cat };
@@ -80,21 +80,16 @@ const clickHandler = (args: ClickHandlerArg) => {
   } else {
     // if this is the second card, do the bussiness
     args.setGrid((prevGrid) => {
-      const newGrid = prevGrid.map(
-        (
-          row: { value: number; turned: boolean; cat: string }[],
-          xIndex: number
-        ) => {
-          const newRow = row.map((card, yIndex) => {
-            if (args.x === xIndex && args.y === yIndex) {
-              return { value: card.value, turned: true, cat: card.cat };
-            } else {
-              return card;
-            }
-          });
-          return newRow;
-        }
-      );
+      const newGrid = prevGrid.map((row, xIndex) => {
+        const newRow = row.map((card, yIndex) => {
+          if (args.x === xIndex && args.y === yIndex) {
+            return { value: card.value, turned: true, cat: card.cat };
+          } else {
+            return card;
+          }
+        });
+        return newRow;
+      });
       return newGrid;
     });
     // if two matching cards are turned, remove them
@@ -102,7 +97,7 @@ const clickHandler = (args: ClickHandlerArg) => {
       setTimeout(() => {
         args.setFirstTurned(null);
         args.setGrid((prevGrid) => {
-          const newGrid = prevGrid.map((row, xIndex: number) => {
+          const newGrid = prevGrid.map((row, xIndex) => {
             const newRow = row.map((card, yIndex) => {
               if (
                 (args.x === xIndex && args.y === yIndex) ||
@@ -125,7 +120,7 @@ const clickHandler = (args: ClickHandlerArg) => {
       // if two cards dont match, they stay revealed a bit longer
       setTimeout(() => {
         args.setGrid((prevGrid) => {
-          const newGrid = prevGrid.map((row, xIndex: number) => {
+          const newGrid = prevGrid.map((row, xIndex) => {
             const newRow = row.map((card, yIndex) => {
               if (
                 (args.x === xIndex && args.y === yIndex) ||
