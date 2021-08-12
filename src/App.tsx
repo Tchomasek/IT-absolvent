@@ -1,5 +1,5 @@
 import "./App.css";
-import { Blog } from "./components/blog/Blog";
+import { BlogApp } from "./components/blog/PostApp";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Pexeso } from "./components/pexeso/Pexeso";
 import Counter from "./components/counter/Counter";
@@ -59,7 +59,7 @@ export default function App() {
             <Pexeso />
           </Route>
           <Route path="/blog">
-            <Blog />
+            <BlogApp />
           </Route>
         </Switch>
       </div>
