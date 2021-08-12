@@ -14,10 +14,9 @@ export type ArticleContextState = {
   addNewArticle: (id: number, header: string, text: string) => void;
 };
 
-export const ArticleContext = React.createContext<ArticleContextState>({
-  articles: [],
-  addNewArticle: () => {},
-});
+export const ArticleContext = React.createContext<ArticleContextState>(
+  null as any
+);
 
 export const BlogApp = () => {
   const [articles, setArticle] = useLocalStorage(

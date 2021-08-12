@@ -12,7 +12,7 @@ export const Navbar = () => {
   const { articles } = useContext(ArticleContext);
   return (
     <Router>
-      <nav style={{ display: "flex" }}>
+      <nav>
         <UlNavbar>
           <li>
             <Link to={URL_BASE}>Overview</Link>

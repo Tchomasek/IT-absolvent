@@ -7,6 +7,7 @@ export const Detail = (props: { article: ArticleState }) => {
       <Helmet>
         <title>Blog - {props.article.header}</title>
       </Helmet>
+      <h2>{props.article.header}</h2>
       <ReactMarkdown>{props.article.text}</ReactMarkdown>
     </>
   );
