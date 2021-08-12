@@ -4,6 +4,7 @@ import { Detail } from "./Detail";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Overview } from "./Overview";
 import { useContext } from "react";
+import styled from "styled-components";
 
 export const URL_BASE = "/blog/";
 
@@ -11,15 +12,15 @@ export const Navbar = () => {
   const { articles } = useContext(ArticleContext);
   return (
     <Router>
-      <nav>
-        <ul>
+      <nav style={{ display: "flex" }}>
+        <UlNavbar>
           <li>
             <Link to={URL_BASE}>Overview</Link>
           </li>
           <li>
-            <Link to={URL_BASE + "create"}>Create</Link>
+            <Link to={URL_BASE + "create"}>Create new Blog Post</Link>
           </li>
-        </ul>
+        </UlNavbar>
       </nav>
       <Switch>
         <Route exact path={URL_BASE}>
@@ -37,3 +38,8 @@ export const Navbar = () => {
     </Router>
   );
 };
+
+const UlNavbar = styled.ul`
+  display: flex;
+  list-style-type: none;
+`;

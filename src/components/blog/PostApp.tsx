@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet";
 import { Navbar } from "./Navbar";
 import { useLocalStorage } from "./UseLocalStorage";
 import React from "react";
+import styled from "styled-components";
 
 export type ArticleState = {
   id: number;
@@ -37,8 +38,22 @@ export const BlogApp = () => {
       <Helmet>
         <title>Blog</title>
       </Helmet>
-      <h1>My Blog</h1>
-      <Navbar />
+      <DivWrapper>
+        <DivHeaderWrapper>
+          <Navbar />
+        </DivHeaderWrapper>
+      </DivWrapper>
     </ArticleContext.Provider>
   );
 };
+
+const DivWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const DivHeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

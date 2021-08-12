@@ -1,6 +1,7 @@
 import { ArticleContext } from "./PostApp";
 import { Helmet } from "react-helmet";
 import React, { useContext, useState } from "react";
+import styled from "styled-components";
 
 export const Create = () => {
   const { articles, addNewArticle } = useContext(ArticleContext);
@@ -22,20 +23,20 @@ export const Create = () => {
   return (
     <>
       <Helmet>
-        <title>Blog</title>
+        <title>Blog - Create new Article</title>
       </Helmet>
-      <h1>Create</h1>
+      <h1>Create Blog Post</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Header"
+          placeholder="Title"
           name="header"
           value={header}
           onChange={(e) => setHeader(e.target.value)}
         />
         <br></br>
-        <textarea
-          placeholder="Text"
+        <Textarea
+          placeholder="Enter your MD here"
           name="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -46,3 +47,8 @@ export const Create = () => {
     </>
   );
 };
+
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 100%;
+`;
