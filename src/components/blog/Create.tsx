@@ -1,5 +1,6 @@
 import { ArticleContext } from "./PostApp";
 import { Helmet } from "react-helmet";
+import { handleInputError } from "./handleInputError";
 import React, { MouseEvent, useContext, useState } from "react";
 import styled from "styled-components";
 
@@ -14,22 +15,15 @@ export const Create = () => {
     e.preventDefault();
     setHeaderError("");
     setTextError("");
-    if (header.replace(/ /g, "") === "") {
-      setHeaderError("Please enter a Title");
-      setHeader("");
-      setText("");
-      if (text.replace(/ /g, "") === "") {
-        setTextError("Please enter some text");
-        setHeader("");
-        setText("");
-        return;
+    const errors = handleInputError(header, text);
+
+    if (errors[header] || errors[text]) {
+      if (errors[header]) {
+        setHeaderError("Please enter a Title");
       }
-      return;
-    }
-    if (text.replace(/ /g, "") === "") {
-      setTextError("Please enter some text");
-      setHeader("");
-      setText("");
+      if (errors[text]) {
+        setTextError("Please enter some text");
+      }
       return;
     }
     addNewArticle(articles.length, header, text);
