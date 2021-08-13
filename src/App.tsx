@@ -1,5 +1,6 @@
 import "./App.css";
 import { BlogApp } from "./components/blog/PostApp";
+import { Jokes } from "./components/jokes/Jokes";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Pexeso } from "./components/pexeso/Pexeso";
 import Counter from "./components/counter/Counter";
@@ -39,6 +40,9 @@ export default function App() {
             <li>
               <Link to="/blog">Blog</Link>
             </li>
+            <li>
+              <Link to="/jokes">Jokes</Link>
+            </li>
           </ul>
         </nav>
 
@@ -60,6 +64,9 @@ export default function App() {
           </Route>
           <Route path="/blog">
             <BlogApp />
+          </Route>
+          <Route path="/jokes">
+            <Jokes />
           </Route>
         </Switch>
       </div>
