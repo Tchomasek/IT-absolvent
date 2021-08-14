@@ -1,9 +1,9 @@
 import { Category } from "./Category";
 import { Helmet } from "react-helmet";
+import { Joke } from "./Joke";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 
 const GlobalStyle = createGlobalStyle`
       body {
@@ -11,80 +11,49 @@ const GlobalStyle = createGlobalStyle`
       }
       `;
 
-const getJokes = async () => {
-  const jokes: string[] = [];
-  while (jokes.length < 20) {
-    await fetch("https://api.chucknorris.io/jokes/random")
-      .then((response) => response.json())
-      .then((data) => {
-        if (jokes.includes(data.value)) {
-          return;
-        } else {
-          jokes.push(data.value);
-        }
-      });
-  }
-  const jokesHtml: string[] = [];
-  jokes.map((x) => {
-    jokesHtml.push(x + "<br>");
-  });
-  const notNull = window.document.getElementById("jokes")!;
-  notNull.innerHTML = String(jokesHtml).replace(/,/g, "");
-  return jokesHtml;
-};
-
-const getCategories = async () => {
-  let categories: any = [];
-  await fetch("https://api.chucknorris.io/jokes/categories")
-    .then((response) => response.json())
-    .then((data) => {
-      categories = data;
-    });
-  let catHtml: any = [];
-  categories.map((x: string) => {
-    catHtml.push(
-      "<a href=https://api.chucknorris.io/jokes/random?category=" +
-        x +
-        ">" +
-        x +
-        "<br>"
-    );
-  });
-
-  const notNull = window.document.getElementById("categories")!;
-  notNull.innerHTML = String(catHtml).replace(/,/g, "");
-  return catHtml;
-};
-
 export const Jokes = () => {
-  getJokes();
-  // getCategories();
-  const categories = [
-    "animal",
-    "career",
-    "celebrity",
-    "dev",
-    "explicit",
-    "fashion",
-    "food",
-    "history",
-    "money",
-    "movie",
-    "music",
-    "political",
-    "religion",
-    "science",
-    "sport",
-    "travel",
-  ];
+  const [jokes, setJokes] = useState<string[]>(["Loading jokes..."]);
+  const [categories, setCategories] = useState<string[]>([
+    "Loading categories...",
+  ]);
+
+  useEffect(() => {
+    const fetchMyAPI = async () => {
+      const jokesArray: string[] = [];
+      while (jokesArray.length < 20) {
+        await fetch("https://api.chucknorris.io/jokes/random").then(
+          (response) =>
+            response.json().then((data) => {
+              if (jokesArray.includes(data.value)) {
+                return;
+              } else {
+                jokesArray.push(data.value);
+              }
+            })
+        );
+      }
+      setJokes(jokesArray);
+      await fetch("https://api.chucknorris.io/jokes/categories").then(
+        (response) =>
+          response.json().then((data) => {
+            setCategories(data);
+          })
+      );
+    };
+    fetchMyAPI();
+  }, []);
+
   return (
     <>
       <Helmet>
         <title>Chuck Norris Jokes</title>
       </Helmet>
       <GlobalStyle />
-      <div id="jokes"></div>
-      <div id="categories"></div>
+      <div id="jokes">
+        {jokes.map((joke, index) => {
+          return <Joke key={index} joke={joke} />;
+        })}
+      </div>
       <Router>
         <ul>
           {categories.map((category, index) => (

@@ -7,7 +7,7 @@ const getJokes = async (category) => {
       .then((response) => response.json())
       .then((data) => {
         if (jokes.includes(data.value)) {
-          console.log("a");
+          console.log("duplicate");
           return;
         } else {
           jokes.push(data.value);
@@ -18,7 +18,7 @@ const getJokes = async (category) => {
   jokes.map((x) => {
     jokesHtml.push(x + "<br>");
   });
-  const notNull = window.document.getElementById("categoryDiv")!;
+  const notNull = window.document.getElementById("jokes")!;
   notNull.innerHTML = String(jokesHtml).replace(/,/g, "");
   return jokesHtml;
 };
@@ -30,7 +30,6 @@ export const Category = (props: { category: string }) => {
       <Helmet>
         <title>Chuck Norris Jokes - {props.category}</title>
       </Helmet>
-      <h2>{props.category}</h2>
       <div id="categoryDiv"></div>
     </>
   );
