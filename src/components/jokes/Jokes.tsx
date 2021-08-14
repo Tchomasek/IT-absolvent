@@ -1,38 +1,19 @@
 import { Category } from "./Category";
 import { Helmet } from "react-helmet";
-import { Joke } from "./Joke";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
+import { RandomJokes } from "./RandomJokes";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
-      body {
-        overflow: visible
-      }
-      `;
+const WrapperDiv = styled.div`
+  display: flex;
+`;
 
 export const Jokes = () => {
-  const [jokes, setJokes] = useState<string[]>(["Loading jokes..."]);
-  const [categories, setCategories] = useState<string[]>([
-    "Loading categories...",
-  ]);
+  const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchMyAPI = async () => {
-      const jokesArray: string[] = [];
-      while (jokesArray.length < 20) {
-        await fetch("https://api.chucknorris.io/jokes/random").then(
-          (response) =>
-            response.json().then((data) => {
-              if (jokesArray.includes(data.value)) {
-                return;
-              } else {
-                jokesArray.push(data.value);
-              }
-            })
-        );
-      }
-      setJokes(jokesArray);
+    const getJokes = async () => {
       await fetch("https://api.chucknorris.io/jokes/categories").then(
         (response) =>
           response.json().then((data) => {
@@ -40,7 +21,7 @@ export const Jokes = () => {
           })
       );
     };
-    fetchMyAPI();
+    getJokes();
   }, []);
 
   return (
@@ -48,33 +29,31 @@ export const Jokes = () => {
       <Helmet>
         <title>Chuck Norris Jokes</title>
       </Helmet>
-      <GlobalStyle />
-      <div id="jokes">
-        {jokes.map((joke, index) => {
-          return <Joke key={index} joke={joke} />;
-        })}
-      </div>
-      <Router>
-        <ul>
-          {categories.map((category, index) => (
-            <>
-              <li>
-                <Link key={index} to={"/" + category}>
-                  {category}
-                </Link>
+      <WrapperDiv>
+        <Router>
+          <ul>
+            <li>
+              <Link to={"/jokes"}>Random</Link>
+            </li>
+            {categories.map((category, index) => (
+              <li key={index}>
+                <Link to={"/jokes/" + category}>{category}</Link>
               </li>
-            </>
-          ))}
-        </ul>
+            ))}
+          </ul>
 
-        <Switch>
-          {categories.map((category, index) => (
-            <Route key={index} path={"/" + category}>
-              <Category category={category} />
+          <Switch>
+            <Route path={"/jokes"} exact>
+              <RandomJokes />
             </Route>
-          ))}
-        </Switch>
-      </Router>
+            {categories.map((category, index) => (
+              <Route key={index} path={"/jokes/" + category}>
+                <Category category={category} />
+              </Route>
+            ))}
+          </Switch>
+        </Router>
+      </WrapperDiv>
     </>
   );
 };

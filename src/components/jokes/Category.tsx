@@ -1,36 +1,52 @@
 import { Helmet } from "react-helmet";
-
-const getJokes = async (category) => {
-  const jokes: string[] = [];
-  while (jokes.length < 5) {
-    await fetch("https://api.chucknorris.io/jokes/random?category=" + category)
-      .then((response) => response.json())
-      .then((data) => {
-        if (jokes.includes(data.value)) {
-          console.log("duplicate");
-          return;
-        } else {
-          jokes.push(data.value);
-        }
-      });
-  }
-  const jokesHtml: string[] = [];
-  jokes.map((x) => {
-    jokesHtml.push(x + "<br>");
-  });
-  const notNull = window.document.getElementById("jokes")!;
-  notNull.innerHTML = String(jokesHtml).replace(/,/g, "");
-  return jokesHtml;
-};
+import { Joke } from "./Joke";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 
 export const Category = (props: { category: string }) => {
-  getJokes(props.category);
+  const [catJokes, setCatJokes] = useState<string[]>([]);
+  useEffect(() => {
+    const getCatJokes = async () => {
+      var counter: number = 0;
+      while (catJokes.length < 5) {
+        counter++;
+        await fetch(
+          "https://api.chucknorris.io/jokes/random?category=" + props.category
+        ).then((response) =>
+          response.json().then((data) => {
+            if (counter > 20) {
+              return;
+            }
+            if (catJokes.includes(data.value)) {
+              return;
+            } else {
+              setCatJokes([...catJokes, data.value]);
+              catJokes.push(data.value);
+            }
+          })
+        );
+      }
+    };
+    getCatJokes();
+  }, []);
   return (
     <>
+      <WrapDiv>
+        <h2>{props.category} jokes</h2>
+        <div id="jokes">
+          {catJokes.map((joke, index) => {
+            return <Joke key={index} joke={joke} />;
+          })}
+        </div>
+      </WrapDiv>
       <Helmet>
         <title>Chuck Norris Jokes - {props.category}</title>
       </Helmet>
-      <div id="categoryDiv"></div>
     </>
   );
 };
+
+const WrapDiv = styled.div`
+  display: flex;
+  flex-flow: column;
+`;
