@@ -2,6 +2,7 @@ import { Category } from "./Category";
 import { Helmet } from "react-helmet";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { RandomJokes } from "./RandomJokes";
+import { URL_CATEGORIES } from "./config";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -14,11 +15,10 @@ export const Jokes = () => {
 
   useEffect(() => {
     const getJokes = async () => {
-      await fetch("https://api.chucknorris.io/jokes/categories").then(
-        (response) =>
-          response.json().then((data) => {
-            setCategories(data);
-          })
+      await fetch(URL_CATEGORIES).then((response) =>
+        response.json().then((data) => {
+          setCategories(data);
+        })
       );
     };
     getJokes();

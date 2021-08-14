@@ -1,30 +1,31 @@
 import { Helmet } from "react-helmet";
 import { Joke } from "./Joke";
+import { URL_CATEGORY, URL_RANDOM } from "./config";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+
+const NUMBER_OF_CATEGORY_JOKES = 5;
+const NUMBER_OF_ATTEMPTS = 20;
 
 export const Category = (props: { category: string }) => {
   const [catJokes, setCatJokes] = useState<string[]>([]);
   useEffect(() => {
     const getCatJokes = async () => {
-      var counter: number = 0;
-      while (catJokes.length < 5) {
+      const jokesTemp: string[] = [];
+      let counter = 0;
+      while (jokesTemp.length < NUMBER_OF_CATEGORY_JOKES) {
         counter++;
-        await fetch(
-          "https://api.chucknorris.io/jokes/random?category=" + props.category
-        ).then((response) =>
-          response.json().then((data) => {
-            if (counter > 20) {
-              return;
-            }
-            if (catJokes.includes(data.value)) {
-              return;
-            } else {
-              setCatJokes([...catJokes, data.value]);
-              catJokes.push(data.value);
-            }
-          })
-        );
+        const response = await fetch(URL_CATEGORY + props.category);
+        const responseJson = await response.json();
+        if (counter > NUMBER_OF_ATTEMPTS) {
+          return;
+        }
+        if (jokesTemp.includes(responseJson.value)) {
+          return;
+        } else {
+          jokesTemp.push(responseJson.value);
+          setCatJokes([...jokesTemp]);
+        }
       }
     };
     getCatJokes();

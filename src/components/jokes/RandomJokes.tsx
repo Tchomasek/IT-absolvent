@@ -1,25 +1,26 @@
 import { Category } from "./Category";
 import { Helmet } from "react-helmet";
 import { Joke } from "./Joke";
+import { URL_RANDOM } from "./config";
 import { useEffect, useState } from "react";
 
 export const RandomJokes = () => {
   const [jokes, setJokes] = useState<string[]>([]);
 
+  const NUMBER_OF_RANDOM_JOKES = 20;
+
   useEffect(() => {
     const getJokes = async () => {
-      while (jokes.length < 20) {
-        await fetch("https://api.chucknorris.io/jokes/random").then(
-          (response) =>
-            response.json().then((data) => {
-              if (jokes.includes(data.value)) {
-                return;
-              } else {
-                setJokes([...jokes, data.value]);
-                jokes.push(data.value);
-              }
-            })
-        );
+      const jokesTemp: string[] = [];
+      while (jokesTemp.length < NUMBER_OF_RANDOM_JOKES) {
+        const response = await fetch(URL_RANDOM);
+        const responseJson = await response.json();
+        if (jokes.includes(responseJson.value)) {
+          return;
+        } else {
+          jokesTemp.push(responseJson.value);
+          setJokes([...jokesTemp]);
+        }
       }
     };
     getJokes();
