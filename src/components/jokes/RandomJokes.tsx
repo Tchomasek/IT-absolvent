@@ -13,13 +13,17 @@ export const RandomJokes = () => {
     const getJokes = async () => {
       const jokesTemp: string[] = [];
       while (jokesTemp.length < NUMBER_OF_RANDOM_JOKES) {
-        const response = await fetch(URL_RANDOM);
-        const responseJson = await response.json();
-        if (jokes.includes(responseJson.value)) {
-          return;
-        } else {
-          jokesTemp.push(responseJson.value);
-          setJokes([...jokesTemp]);
+        try {
+          const response = await fetch(URL_RANDOM);
+          const responseJson = await response.json();
+          if (jokes.includes(responseJson.value)) {
+            return;
+          } else {
+            jokesTemp.push(responseJson.value);
+            setJokes([...jokesTemp]);
+          }
+        } catch (error) {
+          alert(error);
         }
       }
     };
@@ -28,7 +32,7 @@ export const RandomJokes = () => {
 
   return (
     <>
-      <div id="jokes">
+      <div>
         {jokes.map((joke, index) => {
           return <Joke key={index} joke={joke} />;
         })}

@@ -34,7 +34,7 @@ export const Category = (props: { category: string }) => {
     <>
       <WrapDiv>
         <h2>{props.category} jokes</h2>
-        <div id="jokes">
+        <div>
           {catJokes.map((joke, index) => {
             return <Joke key={index} joke={joke} />;
           })}

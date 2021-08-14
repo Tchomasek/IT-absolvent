@@ -15,11 +15,13 @@ export const Jokes = () => {
 
   useEffect(() => {
     const getJokes = async () => {
-      await fetch(URL_CATEGORIES).then((response) =>
-        response.json().then((data) => {
-          setCategories(data);
-        })
-      );
+      try {
+        const response = await fetch(URL_CATEGORIES);
+        const responseJson = await response.json();
+        setCategories(responseJson);
+      } catch (error) {
+        alert(error);
+      }
     };
     getJokes();
   }, []);

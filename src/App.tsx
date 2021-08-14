@@ -65,7 +65,7 @@ export default function App() {
           <Route path="/blog">
             <BlogApp />
           </Route>
-          <Route path="/jokes" exact>
+          <Route path="/jokes">
             <Jokes />
           </Route>
         </Switch>
