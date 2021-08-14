@@ -1,11 +1,11 @@
-import { Category } from "./Category";
-import { Helmet } from "react-helmet";
+import { ErrorDiv } from "./ErrorDiv";
 import { Joke } from "./Joke";
 import { URL_RANDOM } from "./config";
 import { useEffect, useState } from "react";
 
 export const RandomJokes = () => {
   const [jokes, setJokes] = useState<string[]>([]);
+  const [error, setError] = useState(false);
 
   const NUMBER_OF_RANDOM_JOKES = 20;
 
@@ -22,8 +22,8 @@ export const RandomJokes = () => {
             jokesTemp.push(responseJson.value);
             setJokes([...jokesTemp]);
           }
-        } catch (error) {
-          alert(error);
+        } catch {
+          setError(true);
         }
       }
     };
@@ -33,6 +33,9 @@ export const RandomJokes = () => {
   return (
     <>
       <div>
+        {error ? (
+          <ErrorDiv>Unable to fetch data from ${URL_RANDOM}</ErrorDiv>
+        ) : null}
         {jokes.map((joke, index) => {
           return <Joke key={index} joke={joke} />;
         })}

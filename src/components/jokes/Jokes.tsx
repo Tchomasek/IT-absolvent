@@ -1,4 +1,5 @@
 import { Category } from "./Category";
+import { ErrorDiv } from "./ErrorDiv";
 import { Helmet } from "react-helmet";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { RandomJokes } from "./RandomJokes";
@@ -12,6 +13,7 @@ const WrapperDiv = styled.div`
 
 export const Jokes = () => {
   const [categories, setCategories] = useState<string[]>([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getJokes = async () => {
@@ -19,8 +21,8 @@ export const Jokes = () => {
         const response = await fetch(URL_CATEGORIES);
         const responseJson = await response.json();
         setCategories(responseJson);
-      } catch (error) {
-        alert(error);
+      } catch {
+        setError(true);
       }
     };
     getJokes();
@@ -31,6 +33,9 @@ export const Jokes = () => {
       <Helmet>
         <title>Chuck Norris Jokes</title>
       </Helmet>
+      {error ? (
+        <ErrorDiv>Unable to fetch data from ${URL_CATEGORIES}</ErrorDiv>
+      ) : null}
       <WrapperDiv>
         <Router>
           <ul>
