@@ -1,9 +1,11 @@
 import "./App.css";
 import { BlogApp } from "./components/blog/PostApp";
-import { CounterRedux } from "./components/counter-redux/CounterRedux";
+import { CounterInRedux } from "./components/counter-redux/CounterRedux";
 import { Jokes } from "./components/jokes/Jokes";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Pexeso } from "./components/pexeso/Pexeso";
+import { Provider } from "react-redux";
+import { store } from "./components/counter-redux/CounterRedux";
 import Counter from "./components/counter/Counter";
 import HackerTyper from "./components/hacker-typer/HackerTyper";
 import TicTacToe from "./components/tic-tac-toe/TicTacToe";
@@ -72,9 +74,11 @@ export default function App() {
           <Route path="/jokes">
             <Jokes />
           </Route>
-          <Route path="/counter-redux">
-            <CounterRedux />
-          </Route>
+          <Provider store={store}>
+            <Route path="/counter-redux">
+              <CounterInRedux />
+            </Route>
+          </Provider>
         </Switch>
       </div>
     </Router>
