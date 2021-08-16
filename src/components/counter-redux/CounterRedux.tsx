@@ -3,29 +3,39 @@ import { connect } from "react-redux";
 import { createStore } from "redux";
 import styled from "styled-components";
 
+const ADD1 = "ADD1" as const;
+const ADD2 = "ADD2" as const;
+const SUBSTRACT1 = "SUBSTRACT1" as const;
+const SUBSTRACT2 = "SUBSTRACT2" as const;
+const POWER2 = "POWER2" as const;
+const POWERSELF = "POWERSELF" as const;
+const DIVIDEBY2 = "DIVIDEBY2" as const;
+const SQRT = "SQRT" as const;
+const CLEAR = "CLEAR" as const;
+
 const reducer = (state = 0, action: { type: string }) => {
   switch (action.type) {
-    case "add1":
+    case ADD1:
       return state + 1;
-    case "add2":
+    case ADD2:
       return state + 2;
-    case "substract1":
+    case SUBSTRACT1:
       return state + -1;
-    case "substract2":
+    case SUBSTRACT2:
       return state + -2;
-    case "power2":
+    case POWER2:
       return Math.pow(state, 2);
-    case "powerself":
+    case POWERSELF:
       return Math.pow(state, state);
-    case "divide2":
+    case DIVIDEBY2:
       return state / 2;
-    case "sqrt":
+    case SQRT:
       if (state < 0) {
         alert("Nobody likes imaginary numbers!");
         return Math.sqrt(Math.abs(state));
       }
       return Math.sqrt(state);
-    case "clear":
+    case CLEAR:
       return 0;
     default:
       return state;
@@ -56,15 +66,15 @@ const mapStateToProps = (state: { value: number | string }) => {
 const mapDispatchToProps = (
   dispatch: (operation: { type: string }) => void
 ) => ({
-  add1: () => dispatch({ type: "add1" }),
-  add2: () => dispatch({ type: "add2" }),
-  substract1: () => dispatch({ type: "substract1" }),
-  substract2: () => dispatch({ type: "substract2" }),
-  power2: () => dispatch({ type: "power2" }),
-  powerself: () => dispatch({ type: "powerself" }),
-  divide2: () => dispatch({ type: "divide2" }),
-  sqrt: () => dispatch({ type: "sqrt" }),
-  clear: () => dispatch({ type: "clear" }),
+  add1: () => dispatch({ type: ADD1 }),
+  add2: () => dispatch({ type: ADD2 }),
+  substract1: () => dispatch({ type: SUBSTRACT1 }),
+  substract2: () => dispatch({ type: SUBSTRACT2 }),
+  power2: () => dispatch({ type: POWER2 }),
+  powerself: () => dispatch({ type: POWERSELF }),
+  divide2: () => dispatch({ type: DIVIDEBY2 }),
+  sqrt: () => dispatch({ type: SQRT }),
+  clear: () => dispatch({ type: CLEAR }),
 });
 
 const CounterRedux = (props: CounterProps) => {
