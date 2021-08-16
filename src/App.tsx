@@ -1,6 +1,6 @@
 import "./App.css";
 import { BlogApp } from "./components/blog/PostApp";
-import { CounterInRedux } from "./components/counter-redux/CounterRedux";
+import { CounterRedux } from "./components/counter-redux/CounterRedux";
 import { Jokes } from "./components/jokes/Jokes";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Pexeso } from "./components/pexeso/Pexeso";
@@ -76,7 +76,7 @@ export default function App() {
           </Route>
           <Provider store={store}>
             <Route path="/counter-redux">
-              <CounterInRedux />
+              <CounterRedux />
             </Route>
           </Provider>
         </Switch>

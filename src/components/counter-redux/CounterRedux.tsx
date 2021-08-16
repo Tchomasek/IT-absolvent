@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { createStore } from "redux";
 import styled from "styled-components";
 
@@ -12,6 +12,9 @@ const POWERSELF = "POWERSELF" as const;
 const DIVIDEBY2 = "DIVIDEBY2" as const;
 const SQRT = "SQRT" as const;
 const CLEAR = "CLEAR" as const;
+
+const DIVISION_SYMBOL = "\u00F7" as const;
+const SQUARE_ROOT_SYMBOL = "\u221A" as const;
 
 const reducer = (state = 0, action: { type: string }) => {
   switch (action.type) {
@@ -44,40 +47,21 @@ const reducer = (state = 0, action: { type: string }) => {
 
 export const store = createStore(reducer);
 
-type CounterProps = {
-  value: { value: number | string };
-  add1: () => void;
-  add2: () => void;
-  substract1: () => void;
-  substract2: () => void;
-  power2: () => void;
-  powerself: () => void;
-  divide2: () => void;
-  sqrt: () => void;
-  clear: () => void;
-};
-
-const mapStateToProps = (state: { value: number | string }) => {
-  return {
-    value: state,
-  };
-};
-
-const mapDispatchToProps = (
-  dispatch: (operation: { type: string }) => void
-) => ({
-  add1: () => dispatch({ type: ADD1 }),
-  add2: () => dispatch({ type: ADD2 }),
-  substract1: () => dispatch({ type: SUBSTRACT1 }),
-  substract2: () => dispatch({ type: SUBSTRACT2 }),
-  power2: () => dispatch({ type: POWER2 }),
-  powerself: () => dispatch({ type: POWERSELF }),
-  divide2: () => dispatch({ type: DIVIDEBY2 }),
-  sqrt: () => dispatch({ type: SQRT }),
-  clear: () => dispatch({ type: CLEAR }),
+const buttonFunctions = () => ({
+  add1: () => ({ type: ADD1 }),
+  add2: () => ({ type: ADD2 }),
+  substract1: () => ({ type: SUBSTRACT1 }),
+  substract2: () => ({ type: SUBSTRACT2 }),
+  power2: () => ({ type: POWER2 }),
+  powerself: () => ({ type: POWERSELF }),
+  divide2: () => ({ type: DIVIDEBY2 }),
+  sqrt: () => ({ type: SQRT }),
+  clear: () => ({ type: CLEAR }),
 });
 
-const CounterRedux = (props: CounterProps) => {
+export const CounterRedux = () => {
+  const value = useSelector((value) => value);
+  const dispatch = useDispatch();
   return (
     <>
       <Helmet>
@@ -85,40 +69,45 @@ const CounterRedux = (props: CounterProps) => {
       </Helmet>
       <DivWrapper>
         <DivValue>
-          <h1>{props.value}</h1>
+          <h1>{value}</h1>
         </DivValue>
         <DivButtons>
           <DivButtons>
-            <Button onClick={props.substract2}>-2</Button>
-            <Button onClick={props.substract1}>-1</Button>
-            <Button onClick={props.add1}>+1</Button>
-            <Button onClick={props.add2}>+2</Button>
+            <Button onClick={() => dispatch(buttonFunctions().substract2())}>
+              -2
+            </Button>
+            <Button onClick={() => dispatch(buttonFunctions().substract1())}>
+              -1
+            </Button>
+            <Button onClick={() => dispatch(buttonFunctions().add1())}>
+              +1
+            </Button>
+            <Button onClick={() => dispatch(buttonFunctions().add2())}>
+              +2
+            </Button>
           </DivButtons>
-          <Button onClick={props.power2}>
+          <Button onClick={() => dispatch(buttonFunctions().power2())}>
             X<sup>2</sup>
           </Button>
-          <Button onClick={props.powerself}>
+          <Button onClick={() => dispatch(buttonFunctions().powerself())}>
             X<sup>X</sup>
           </Button>
-          <Button onClick={props.divide2}>
-            <span>&#247;</span>2
+          <Button onClick={() => dispatch(buttonFunctions().divide2())}>
+            <span>{DIVISION_SYMBOL}</span>2
           </Button>
-          <Button onClick={props.sqrt}>
-            <span>&#8730;</span>X
+          <Button onClick={() => dispatch(buttonFunctions().sqrt())}>
+            <span>{SQUARE_ROOT_SYMBOL}</span>X
           </Button>
           <DivButtons>
-            <Button onClick={props.clear}>C</Button>
+            <Button onClick={() => dispatch(buttonFunctions().clear())}>
+              C
+            </Button>
           </DivButtons>
         </DivButtons>
       </DivWrapper>
     </>
   );
 };
-
-export const CounterInRedux = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CounterRedux);
 
 const DivWrapper = styled.div`
   display: flex;
