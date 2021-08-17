@@ -59,8 +59,10 @@ const buttonFunctions = () => ({
   clear: () => ({ type: CLEAR }),
 });
 
+const selectorFun = (value: number) => value;
+
 export const CounterRedux = () => {
-  const value = useSelector((value) => value);
+  const value = useSelector(selectorFun);
   const dispatch = useDispatch();
   return (
     <>
