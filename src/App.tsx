@@ -47,7 +47,7 @@ export default function App() {
               <Link to="/jokes">Jokes</Link>
             </li>
             <li>
-              <Link to="/counter-redux">Counter Reduxx</Link>
+              <Link to="/counter-redux">Counter Redux</Link>
             </li>
           </ul>
         </nav>
