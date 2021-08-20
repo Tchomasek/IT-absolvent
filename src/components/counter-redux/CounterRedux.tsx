@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
-import { connect, useDispatch, useSelector } from "react-redux";
 import { createStore } from "redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 const ADD1 = "ADD1" as const;

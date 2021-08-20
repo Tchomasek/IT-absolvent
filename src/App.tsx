@@ -14,7 +14,7 @@ import ToDo from "./components/todo/Todo";
 export default function App() {
   return (
     <Router>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: "flex", flexDirection: "column" }} className="app">
         <nav>
           <ul
             style={{

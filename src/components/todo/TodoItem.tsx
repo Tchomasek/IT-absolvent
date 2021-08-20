@@ -1,4 +1,4 @@
-import React from "react";
+import styled from "styled-components";
 
 type todoProps = {
   id: number;
@@ -25,25 +25,15 @@ const TodoItem = ({
     ? { fontSize: "40px", textDecoration: "line-through" }
     : { fontSize: "40px" };
   return (
-    <div
-      className="todo-item"
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-      }}
-    >
-      <input
+    <TodoItemDiv className="todo-item">
+      <CheckboxInput
         type="checkbox"
-        style={{ height: "30px", width: "30px" }}
         checked={completed}
         onChange={() => handleCheckboxToggle(id)}
       />
       {enableEdit ? (
-        <input
+        <TextInput
           type="text"
-          style={{ fontSize: "40px" }}
           autoFocus
           value={text}
           onChange={(e) => handleTextChange(e, id)}
@@ -63,8 +53,24 @@ const TodoItem = ({
       <button value={id} onClick={handleDelete}>
         Delete
       </button>
-    </div>
+    </TodoItemDiv>
   );
 };
+
+const TodoItemDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const CheckboxInput = styled.input`
+  height: 30px;
+  width: 30px;
+`;
+
+const TextInput = styled.input`
+  font-size: 40px;
+`;
 
 export default TodoItem;

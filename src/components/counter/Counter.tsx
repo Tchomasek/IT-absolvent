@@ -3,14 +3,12 @@ import { Helmet } from "react-helmet";
 import React from "react";
 import randomColor from "randomcolor";
 
-interface Props {}
-
 interface State {
   counter: number;
   color: string;
 }
 
-class App extends React.Component<Props, State> {
+class App extends React.Component<{}, State> {
   constructor(state: State) {
     super(state);
     this.state = { counter: 0, color: "blue" };
@@ -25,7 +23,7 @@ class App extends React.Component<Props, State> {
       color: rColor,
     });
   }
-  increment(event) {
+  increment() {
     this.changeColor();
     this.setState((prevState) => {
       return {
@@ -33,7 +31,7 @@ class App extends React.Component<Props, State> {
       };
     });
   }
-  decrement(event) {
+  decrement() {
     this.changeColor();
     this.setState((prevState) => {
       return {

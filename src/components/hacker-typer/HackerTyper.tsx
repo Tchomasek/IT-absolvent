@@ -1,10 +1,8 @@
 import { Helmet } from "react-helmet";
-import { createGlobalStyle } from "styled-components";
 import Modal from "react-modal";
 import React from "react";
-import templateText from "./Text.jsx";
-
-interface Props {}
+import styled, { createGlobalStyle } from "styled-components";
+import templateText from "./Text";
 
 interface State {
   text: string;
@@ -12,18 +10,11 @@ interface State {
   modalIsOpen: boolean;
   speed: number;
 }
-const GlobalStyle = createGlobalStyle`
-      body {
-        background-color: black;
-        color: green;
-        overflow: visible
-      }
-      `;
-class App extends React.Component<Props, State> {
+
+class App extends React.Component<{}, State> {
   constructor(state: State) {
     super(state);
     this.myHandler = this.myHandler.bind(this);
-    this.handleSpeedChange = this.handleSpeedChange.bind(this);
     this.openSettings = this.openSettings.bind(this);
     this.closeSettings = this.closeSettings.bind(this);
     this.state = {
@@ -46,18 +37,10 @@ class App extends React.Component<Props, State> {
         counter: prevState.counter + this.state.speed,
       };
     });
-    const div = document.getElementById("cont");
-    //@ts-ignore
+    const div = document.getElementById("cont")!;
     div.innerHTML = this.state.text;
   }
 
-  handleSpeedChange(e) {
-    this.setState(() => {
-      return {
-        speed: parseInt(e.target.value),
-      };
-    });
-  }
   componentDidMount() {
     document.addEventListener("keydown", this.myHandler);
   }
@@ -100,19 +83,37 @@ class App extends React.Component<Props, State> {
           <input
             type="number"
             value={this.state.speed}
-            onChange={this.handleSpeedChange}
+            onChange={(e) => this.setState({ speed: parseInt(e.target.value) })}
           />
           <button onClick={this.closeSettings}>x</button>
         </Modal>
-        <div style={{ whiteSpace: "pre" }} id="cont"></div>
-        <div style={{ position: "fixed", bottom: 0, width: "100%" }}>
+        <ContainerDiv id="cont"></ContainerDiv>
+        <SettingsButtonDiv>
           <button id="settingsButton" onClick={this.openSettings}>
             Settings
           </button>
-        </div>
+        </SettingsButtonDiv>
       </div>
     );
   }
 }
+
+const ContainerDiv = styled.div`
+  white-space: pre;
+`;
+
+const SettingsButtonDiv = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+`;
+
+const GlobalStyle = createGlobalStyle`
+      body {
+        background-color: black;
+        color: green;
+        overflow: visible
+      }
+      `;
 
 export default App;

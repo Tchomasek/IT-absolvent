@@ -1,11 +1,19 @@
 import { Helmet } from "react-helmet";
 import React from "react";
 import TodoItem from "./TodoItem";
+import styled from "styled-components";
 
 interface Props {}
 
+export type todoItem = {
+  id: number;
+  text: string;
+  completed: boolean;
+  enableEdit: boolean;
+};
+
 interface State {
-  todos: any;
+  todos: todoItem[];
   newTodo: string;
   nextId: number;
   filter: string;
@@ -23,13 +31,12 @@ class TodoList extends React.Component<Props, State> {
     this.handleCheckboxToggle = this.handleCheckboxToggle.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleClick = this.handleClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.enableEditToggle = this.enableEditToggle.bind(this);
   }
 
-  onSubmit(e) {
+  onSubmit(e: React.FormEvent) {
     e.preventDefault();
     const newTodoArray = {
       id: this.state.nextId,
@@ -39,16 +46,16 @@ class TodoList extends React.Component<Props, State> {
     };
     this.setState((prevState) => {
       return {
-        todos: this.state.todos.concat(newTodoArray),
+        todos: prevState.todos.concat(newTodoArray),
         newTodo: "",
-        nextId: this.state.nextId + 1,
+        nextId: prevState.nextId + 1,
       };
     });
   }
 
-  handleCheckboxToggle(id) {
+  handleCheckboxToggle(id: number) {
     this.setState((prevState) => {
-      const updatedTodos = prevState.todos.map((todo) => {
+      const updatedTodos = prevState.todos.map((todo: todoItem) => {
         if (todo.id === id) {
           return {
             ...todo,
@@ -63,17 +70,13 @@ class TodoList extends React.Component<Props, State> {
     });
   }
 
-  handleInputChange(e) {
+  handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ newTodo: e.target.value });
   }
 
-  handleClick(e) {
-    this.setState({ filter: e.target.value });
-  }
-
-  handleDelete(e) {
+  handleDelete(e: React.SyntheticEvent<HTMLButtonElement>) {
     const newTodos = this.state.todos.filter(
-      (item) => item.id !== parseInt(e.target.value)
+      (item) => item.id !== parseInt(e.currentTarget.value)
     );
     this.setState(() => {
       return {
@@ -82,7 +85,7 @@ class TodoList extends React.Component<Props, State> {
     });
   }
 
-  handleTextChange(e, id) {
+  handleTextChange(e: React.ChangeEvent<HTMLInputElement>, id: number) {
     const newTodos = this.state.todos.map((item) => {
       if (item.id === id) {
         return {
@@ -97,7 +100,7 @@ class TodoList extends React.Component<Props, State> {
     });
   }
 
-  enableEditToggle(id) {
+  enableEditToggle(id: number) {
     this.setState((prevState) => {
       const updatedTodos = prevState.todos.map((todo) => {
         if (todo.id === id) {
@@ -150,43 +153,61 @@ class TodoList extends React.Component<Props, State> {
         <Helmet>
           <title>ToDo</title>
         </Helmet>
-        <div
-          className="todo-list"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            width: "50%",
-          }}
-        >
-          <form onSubmit={this.onSubmit}>
-            <input
+        <TodoListDiv className="todo-list">
+          <InputForm onSubmit={this.onSubmit}>
+            <TextInput
               type="text"
               placeholder="add new task"
               autoFocus
               value={this.state.newTodo}
               onChange={this.handleInputChange}
             />
-          </form>
+          </InputForm>
           {todoItems}
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <button value="all" onClick={this.handleClick}>
+          <ButtonsDiv>
+            <button onClick={() => this.setState({ filter: "all" })}>
               All
             </button>
-            <button value="completed" onClick={this.handleClick}>
+            <button onClick={() => this.setState({ filter: "completed" })}>
               completed
             </button>
-            <button value="active" onClick={this.handleClick}>
+            <button onClick={() => this.setState({ filter: "active" })}>
               active
             </button>
-          </div>
-          <p style={{ display: "flex", justifyContent: "center" }}>
-            Edit task with doubleclick, press enter to confirm.
-          </p>
-        </div>
+          </ButtonsDiv>
+          <P>Edit task with doubleclick, press enter to confirm.</P>
+        </TodoListDiv>
       </>
     );
   }
 }
+
+const P = styled.p`
+  display: flex;
+  justify-content: center;
+`;
+
+const InputForm = styled.form`
+  display: flex;
+  justify-content: center;
+`;
+
+const TextInput = styled.input`
+  font-size: 50px;
+  width: 500px;
+  height: 70px;
+`;
+
+const TodoListDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+`;
+
+const ButtonsDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 export default TodoList;
