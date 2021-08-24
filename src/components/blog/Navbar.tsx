@@ -6,7 +6,6 @@ import { Nav } from "react-bootstrap";
 import { Overview } from "./Overview";
 import { useContext } from "react";
 import styled from "styled-components";
-
 export const URL_BASE = "/blog/";
 
 export const Navbar = () => {
@@ -15,9 +14,11 @@ export const Navbar = () => {
     <>
       <Nav className="justify-content-center ">
         <Nav.Item>
+          <Link to={URL_BASE}>Overview</Link>
           <Nav.Link href={URL_BASE}>Overview</Nav.Link>
         </Nav.Item>
         <Nav.Item>
+          <Link to={URL_BASE + "create"}>Create new Blog Post</Link>
           <Nav.Link href={URL_BASE + "create"}>Create new Blog Post</Nav.Link>
         </Nav.Item>
       </Nav>
