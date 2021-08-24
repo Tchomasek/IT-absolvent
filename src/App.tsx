@@ -69,7 +69,6 @@ export default function App() {
               >
                 About me
               </Link>
-              <Link to="/counter">Counter</Link>
               <a
                 href="https://github.com/Tchomasek/IT-absolvent"
                 target="_blank"

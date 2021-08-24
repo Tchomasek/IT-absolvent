@@ -1,4 +1,5 @@
 import { Badge, Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import React from "react";
 import styled from "styled-components";
 
@@ -11,7 +12,7 @@ type LinkCardProps = {
 export const LinkCard = (props: LinkCardProps) => {
   return (
     <>
-      <A href={props.link}>
+      <Link to={props.link}>
         <Card className="h-100 shadow-sm bg-white rounded">
           <Card.Img variant="top" src={props.img} />
           <Card.Body
@@ -23,7 +24,7 @@ export const LinkCard = (props: LinkCardProps) => {
             </div>
           </Card.Body>
         </Card>
-      </A>
+      </Link>
     </>
   );
 };
