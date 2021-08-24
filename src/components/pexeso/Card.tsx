@@ -10,6 +10,7 @@ const MyTd = styled.td<MyTdProps>`
   width: ${theme.sizeOfCard};
   height: ${theme.sizeOfCard};
   background-image: url(${(props) => props.cat});
+  padding: 5px;
 `;
 
 type Props = {

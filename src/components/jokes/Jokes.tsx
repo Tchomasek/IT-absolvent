@@ -37,29 +37,29 @@ export const Jokes = () => {
         <ErrorDiv>Unable to fetch data from ${URL_CATEGORIES}</ErrorDiv>
       ) : null}
       <WrapperDiv>
-        <Router>
-          <ul>
-            <li>
-              <Link to={"/jokes"}>Random</Link>
+        {/* <Router> */}
+        <ul>
+          <li>
+            <Link to={"/jokes"}>Random</Link>
+          </li>
+          {categories.map((category, index) => (
+            <li key={index}>
+              <Link to={"/jokes/" + category}>{category}</Link>
             </li>
-            {categories.map((category, index) => (
-              <li key={index}>
-                <Link to={"/jokes/" + category}>{category}</Link>
-              </li>
-            ))}
-          </ul>
+          ))}
+        </ul>
 
-          <Switch>
-            <Route path={"/jokes"} exact>
-              <RandomJokes />
+        <Switch>
+          <Route path={"/jokes"} exact>
+            <RandomJokes />
+          </Route>
+          {categories.map((category, index) => (
+            <Route key={index} path={"/jokes/" + category}>
+              <Category category={category} />
             </Route>
-            {categories.map((category, index) => (
-              <Route key={index} path={"/jokes/" + category}>
-                <Category category={category} />
-              </Route>
-            ))}
-          </Switch>
-        </Router>
+          ))}
+        </Switch>
+        {/* </Router> */}
       </WrapperDiv>
     </>
   );

@@ -2,6 +2,7 @@ import { ArticleContext } from "./PostApp";
 import { Create } from "./Create";
 import { Detail } from "./Detail";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Nav } from "react-bootstrap";
 import { Overview } from "./Overview";
 import { useContext } from "react";
 import styled from "styled-components";
@@ -11,8 +12,16 @@ export const URL_BASE = "/blog/";
 export const Navbar = () => {
   const { articles } = useContext(ArticleContext);
   return (
-    <Router>
-      <nav>
+    <>
+      <Nav className="justify-content-center ">
+        <Nav.Item>
+          <Nav.Link href={URL_BASE}>Overview</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href={URL_BASE + "create"}>Create new Blog Post</Nav.Link>
+        </Nav.Item>
+      </Nav>
+      {/* <nav>
         <UlNavbar>
           <li>
             <Link to={URL_BASE}>Overview</Link>
@@ -21,7 +30,7 @@ export const Navbar = () => {
             <Link to={URL_BASE + "create"}>Create new Blog Post</Link>
           </li>
         </UlNavbar>
-      </nav>
+      </nav> */}
       <Switch>
         <Route exact path={URL_BASE}>
           <Overview />
@@ -35,7 +44,7 @@ export const Navbar = () => {
           </Route>
         ))}
       </Switch>
-    </Router>
+    </>
   );
 };
 

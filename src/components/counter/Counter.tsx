@@ -2,13 +2,14 @@ import "./App.css";
 import { Helmet } from "react-helmet";
 import React from "react";
 import randomColor from "randomcolor";
+import styled from "styled-components";
 
 interface State {
   counter: number;
   color: string;
 }
 
-class App extends React.Component<{}, State> {
+export class Counter extends React.Component<{}, State> {
   constructor(state: State) {
     super(state);
     this.state = { counter: 0, color: "blue" };
@@ -41,7 +42,7 @@ class App extends React.Component<{}, State> {
   }
   render() {
     return (
-      <>
+      <WrapperDiv className="a">
         <Helmet>
           <title>Counter</title>
         </Helmet>
@@ -50,9 +51,14 @@ class App extends React.Component<{}, State> {
           <a>{this.state.counter}</a>
           <button onClick={this.increment}>+1</button>
         </div>
-      </>
+      </WrapperDiv>
     );
   }
 }
 
-export default App;
+const WrapperDiv = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

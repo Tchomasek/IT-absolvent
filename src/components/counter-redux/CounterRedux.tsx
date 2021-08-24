@@ -71,7 +71,7 @@ export const CounterRedux = () => {
       </Helmet>
       <DivWrapper>
         <DivValue>
-          <h1>{value}</h1>
+          <ValueP>{value}</ValueP>
         </DivValue>
         <DivButtons>
           <DivButtons>
@@ -129,4 +129,9 @@ const DivButtons = styled.div`
 const Button = styled.button`
   width: 100px;
   height: 100px;
+  margin: 5px;
+`;
+
+const ValueP = styled.p`
+  font-size: 90px;
 `;

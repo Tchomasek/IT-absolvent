@@ -37,7 +37,7 @@ function createGrid() {
   );
 }
 
-export default class TicTacToe extends Component<{}, State> {
+export class TicTacToe extends Component<{}, State> {
   constructor(props) {
     super(props);
     this.state = {

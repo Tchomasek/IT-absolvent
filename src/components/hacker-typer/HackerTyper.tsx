@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import Modal from "react-modal";
 import React from "react";
+import hackerBackground from "./hackerBackground.png";
 import styled, { createGlobalStyle } from "styled-components";
 import templateText from "./Text";
 
@@ -11,7 +12,7 @@ interface State {
   speed: number;
 }
 
-class App extends React.Component<{}, State> {
+export class HackerTyper extends React.Component<{}, State> {
   constructor(state: State) {
     super(state);
     this.myHandler = this.myHandler.bind(this);
@@ -100,6 +101,7 @@ class App extends React.Component<{}, State> {
 
 const ContainerDiv = styled.div`
   white-space: pre;
+  font-size: 35px;
 `;
 
 const SettingsButtonDiv = styled.div`
@@ -109,11 +111,9 @@ const SettingsButtonDiv = styled.div`
 `;
 
 const GlobalStyle = createGlobalStyle`
-      body {
-        background-color: black;
-        color: green;
-        overflow: visible
-      }
-      `;
-
-export default App;
+  body {
+    background: url(${hackerBackground});
+    color: #0cee0c;
+    overflow: visible;
+  }
+`;

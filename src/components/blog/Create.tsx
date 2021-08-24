@@ -1,4 +1,5 @@
 import { ArticleContext } from "./PostApp";
+import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { handleInputError } from "./handleInputError";
 import React, { MouseEvent, useContext, useState } from "react";
@@ -32,38 +33,41 @@ export const Create = () => {
   };
 
   return (
-    <>
+    <WrapperDiv>
       <Helmet>
         <title>Blog - Create new Article</title>
       </Helmet>
       <h1>Create Blog Post</h1>
-      <form>
-        <input
+      <InputGroup>
+        <InputGroup.Text>Title</InputGroup.Text>
+        <FormControl
           type="text"
-          placeholder="Title"
           name="header"
           value={header}
           onChange={(e) => setHeader(e.target.value)}
         />
-        <ErrorP>{headerError}</ErrorP>
-        <br></br>
-        <Textarea
-          placeholder="Enter your MD here"
+      </InputGroup>
+      <ErrorP>{headerError}</ErrorP>
+
+      <InputGroup>
+        <InputGroup.Text>Enter your MD here</InputGroup.Text>
+        <FormControl
+          as="textarea"
           name="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
+      </InputGroup>
+      <form>
         <ErrorP>{textError}</ErrorP>
-        <br></br>
-        <button onClick={handleSubmit}>Submit</button>
+        <Button onClick={handleSubmit}>Submit</Button>
       </form>
-    </>
+    </WrapperDiv>
   );
 };
 
-const Textarea = styled.textarea`
+const WrapperDiv = styled.div`
   width: 100%;
-  height: 100%;
 `;
 
 const ErrorP = styled.p`

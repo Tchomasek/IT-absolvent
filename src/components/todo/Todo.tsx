@@ -19,7 +19,7 @@ interface State {
   filter: string;
 }
 
-class TodoList extends React.Component<Props, State> {
+export class Todo extends React.Component<Props, State> {
   constructor(state: State) {
     super(state);
     this.state = {
@@ -154,33 +154,47 @@ class TodoList extends React.Component<Props, State> {
           <title>ToDo</title>
         </Helmet>
         <TodoListDiv className="todo-list">
-          <InputForm onSubmit={this.onSubmit}>
-            <TextInput
-              type="text"
-              placeholder="add new task"
-              autoFocus
-              value={this.state.newTodo}
-              onChange={this.handleInputChange}
-            />
-          </InputForm>
+          <InputDiv>
+            <InputForm onSubmit={this.onSubmit}>
+              <TextInput
+                type="text"
+                placeholder="add new task"
+                autoFocus
+                value={this.state.newTodo}
+                onChange={this.handleInputChange}
+              />
+            </InputForm>
+            <Button onClick={this.onSubmit}>Submit</Button>
+          </InputDiv>
           {todoItems}
           <ButtonsDiv>
-            <button onClick={() => this.setState({ filter: "all" })}>
+            <Button onClick={() => this.setState({ filter: "all" })}>
               All
-            </button>
-            <button onClick={() => this.setState({ filter: "completed" })}>
-              completed
-            </button>
-            <button onClick={() => this.setState({ filter: "active" })}>
-              active
-            </button>
+            </Button>
+            <Button onClick={() => this.setState({ filter: "completed" })}>
+              Completed
+            </Button>
+            <Button onClick={() => this.setState({ filter: "active" })}>
+              Active
+            </Button>
           </ButtonsDiv>
-          <P>Edit task with doubleclick, press enter to confirm.</P>
+          <P>Edit task with doubleclick, press Enter to confirm.</P>
         </TodoListDiv>
       </>
     );
   }
 }
+
+const Button = styled.button`
+  margin: 5px;
+`;
+
+const InputDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  align-items: center;
+`;
 
 const P = styled.p`
   display: flex;
@@ -209,5 +223,3 @@ const ButtonsDiv = styled.div`
   display: flex;
   justify-content: center;
 `;
-
-export default TodoList;

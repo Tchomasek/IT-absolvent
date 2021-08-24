@@ -7,14 +7,6 @@ import styled from "styled-components";
 
 const GRID_SIZE = 4;
 
-const DivWrapper = styled.div`
-  display: flex;
-  margin: auto;
-  text-align: center;
-  flex-flow: column;
-  justify-content: center;
-`;
-
 const createGrid = () => {
   const shuffledArray = shuffle(doubledArray);
   return Array.from({ length: GRID_SIZE }).map(() =>
@@ -181,10 +173,23 @@ export const Pexeso = () => {
         <title>Catxeso</title>
       </Helmet>
       <DivWrapper>
-        <table>
+        <Table>
           <tbody>{board}</tbody>
-        </table>
+        </Table>
       </DivWrapper>
     </>
   );
 };
+
+const Table = styled.table`
+  border-collapse: separate;
+  border-spacing: 10px;
+`;
+
+const DivWrapper = styled.div`
+  display: flex;
+  margin: auto;
+  text-align: center;
+  flex-flow: column;
+  justify-content: center;
+`;

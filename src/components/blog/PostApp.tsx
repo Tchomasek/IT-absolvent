@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import { Navbar } from "./Navbar";
+import { init_state } from "./init_state";
 import { useLocalStorage } from "./UseLocalStorage";
 import React from "react";
 import styled from "styled-components";
@@ -21,7 +22,7 @@ export const ArticleContext = React.createContext<ArticleContextState>(
 export const BlogApp = () => {
   const [articles, setArticle] = useLocalStorage(
     "articles",
-    [] as ArticleState[]
+    init_state as ArticleState[]
   );
 
   const addNewArticle = (newId: number, newHeader: string, newText: string) => {
@@ -55,4 +56,5 @@ const DivWrapper = styled.div`
 const DivHeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 50%;
 `;
