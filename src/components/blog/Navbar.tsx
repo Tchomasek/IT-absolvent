@@ -12,14 +12,28 @@ export const Navbar = () => {
   const { articles } = useContext(ArticleContext);
   return (
     <>
-      <Nav className="justify-content-center ">
+      <Nav fill variant="tabs" className="justify-content-center ">
         <Nav.Item>
-          <Link to={URL_BASE}>Overview</Link>
-          <Nav.Link href={URL_BASE}>Overview</Nav.Link>
+          <Link
+            style={{
+              textDecoration: "none",
+              fontSize: "30px",
+            }}
+            to={URL_BASE}
+          >
+            Overview
+          </Link>
         </Nav.Item>
         <Nav.Item>
-          <Link to={URL_BASE + "create"}>Create new Blog Post</Link>
-          <Nav.Link href={URL_BASE + "create"}>Create new Blog Post</Nav.Link>
+          <Link
+            style={{
+              textDecoration: "none",
+              fontSize: "30px",
+            }}
+            to={URL_BASE + "create"}
+          >
+            Create new Blog Post
+          </Link>
         </Nav.Item>
       </Nav>
       {/* <nav>
