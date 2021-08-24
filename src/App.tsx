@@ -49,7 +49,6 @@ export default function App() {
         <WrapperDiv className="app">
           <nav>
             <Ul>
-              {/* <li> */}
               <Link
                 to="/"
                 style={{
@@ -70,7 +69,7 @@ export default function App() {
               >
                 About me
               </Link>
-              {/* </li> */}
+              <Link to="/counter">Counter</Link>
               <a
                 href="https://github.com/Tchomasek/IT-absolvent"
                 target="_blank"
